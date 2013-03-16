@@ -6,6 +6,7 @@ $(function() {
             $('#input').val('{9: "World", 3: "Hello", 1: "Oh,"}');
         }
         reset();
+
         return false;
     }).eq(0).trigger('click');
 
@@ -13,6 +14,7 @@ $(function() {
         item = 0;
         $('#output').val('');
         $('#logger').empty();
+        $('#no').hide();
     }
 
     function logger(text, class_suffix) {
@@ -22,7 +24,7 @@ $(function() {
     function run_next(reason) {
         item++;
         if(reason) logger(reason, "error");
-        
+
         $(window).trigger('run_snippet');
     }
 
@@ -36,6 +38,8 @@ $(function() {
     var item = 0;
     $(window).bind('run_snippet', function() {
         var answer_id = answers[item].answer_id;
+
+        $('#no').hide();
         
         // Output!
         setTimeout(function() {
@@ -44,8 +48,8 @@ $(function() {
 
             setTimeout(function() {
                 $(window).trigger('run_snippet_go');
-            }, 200); // Don't freeze up the browser
-        }, 200); // Don't freeze up the browser
+            }, 100); // Don't freeze up the browser
+        }, 100); // Don't freeze up the browser
     });
     $(window).bind('run_snippet_go', function() {
         if(item >= answers.length) {
@@ -101,6 +105,7 @@ $(function() {
             if(output) {
                 $('#output').val(output); 
                 logger("Your array was sorted!", "success");
+                $('#no').show();
             } else {
                 run_next("Didn't return a value.");
             }
@@ -114,6 +119,7 @@ $(function() {
     $('#sort-again').click(function() {
         item++;
         $(window).trigger('run_snippet');
+        return false;
     });
 
     $('#sort').click(function() {
