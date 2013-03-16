@@ -1,7 +1,139 @@
 @import 'lib';
 
+@blue: #5f7ea9;
+a, a:visited {
+    color: @blue;
+    text-decoration: none;
+    &:hover {
+    color: @blue;
+        text-decoration: underline;
+    }
+}
 body {
-    h1 {
-        color: @light-gray;
+    background-color: #eee;
+    section {
+        margin: auto;
+        overflow: hidden;
+        padding-top: 50px;
+        width: 920px;
+        h2 {
+            border-bottom: 1px dotted #CCCCCC;
+            padding-bottom: 20px;
+            text-align: center;
+        }
+    }
+    #left {
+        width: 520px;
+        float: left;
+    }
+    header {
+        background-color: #fff;
+        border-bottom: 1px solid #ddd;
+        padding: 60px;
+        h1 {
+            color: #000;
+            font-weight: normal;
+            text-align: center;
+            font-size: 60px;
+            margin: 0;
+        }
+        p {
+            width: 600px;
+            color: #666;
+            text-align: center;
+            margin: 0 auto;
+        }
+    }
+
+    .label {
+        text-align: right;
+        width: 200px;
+        font-size: 12px;
+        float: left;
+        .border-box;
+        padding: 10px;
+        color: #555;
+        clear: both;
+        strong {
+            display: block;
+            font-size: 14px;
+            color: #000;
+        }
+    }
+    .after {
+        text-align: left;
+        width: 20px;
+        float: left;
+        .border-box;
+        padding: 10px;
+        color: #555;
+        strong {
+            display: block;
+            font-size: 14px;
+            color: #000;
+        }
+    }
+    .input {
+        .border-box;
+        float: left;
+        width: 300px;
+    }
+    .sorter {
+        .border-box;
+        clear: both;
+        padding: 20px;
+        text-align: center;
+        #sort {
+            background-color: @blue;
+            border: 0 none;
+            color: #FFFFFF;
+            font-size: 23px;
+            font-weight: bold;
+            margin-left: 170px;
+            padding: 10px 20px;
+            text-shadow: 0 1px 1px #000000;
+        }
+    }
+    textarea {
+        width: 100%;
+        .border-box;
+        border: 1px solid #ddd;
+        .border-radius(7px);
+        resize: none;
+        padding: 10px;
+    }
+}
+
+#right {
+    padding-left: 100px;
+    .border-box;
+    width: 400px;
+    float: left;
+    strong {
+        display: block;
+        font-size: 14px;
+        color: #000;
+    }
+    #logger {
+        font-size: 12px;
+        .border-box;
+        background-color: #FFFFFF;
+        border: 1px solid #DDDDDD;
+        .border-radius(5px);
+        float: left;
+        width: 100%;
+        height: 300px;
+        overflow: auto;
+        padding: 10px 15px 15px;
+        .log-error {
+            color: red;
+        }
+        .log-success {
+            color: green;
+        }
+        .log-trying {
+            font-weight: bold;
+            padding-top: 5px;
+        }
     }
 }

@@ -1,20 +1,29 @@
 $(function() {
+    $('#desc a').click(function() {
+        if($(this).data('type') == 'list') {
+            $('#input').val('[0, 9, 3, 2, 7]');
+        } else {
+            $('#input').val('{9: "World", 3: "Hello", 1: "Oh,"}');
+        }
+        reset();
+        return false;
+    }).eq(0).trigger('click');
+
+    function reset() {
+        item = 0;
+        $('#output').val('');
+        $('#logger').empty();
+    }
+
     function logger(text, class_suffix) {
         $('#logger').append($('<div>', {'html': text, 'class': 'log-' + class_suffix}));
+        $('#logger')[0].scrollTop = $('#logger')[0].scrollHeight;
     }
     function run_next(reason) {
         item++;
-        logger(reason);
+        if(reason) logger(reason, "error");
         
-        // Output!
-        setTimeout(function() {
-            var answer_id = answers[item].answer_id;
-            logger("Trying StackOverflow Answer " + answer_id, 2);
-
-            setTimeout(function() {
-                $(window).trigger('run_snippet');
-            }, 200); // Don't freeze up the browser
-        }, 200); // Don't freeze up the browser
+        $(window).trigger('run_snippet');
     }
 
     var answers = window.localStorage['answers'];
@@ -26,8 +35,21 @@ $(function() {
 
     var item = 0;
     $(window).bind('run_snippet', function() {
+        var answer_id = answers[item].answer_id;
+        
+        // Output!
+        setTimeout(function() {
+            var answer_id = answers[item].answer_id;
+            logger("Trying StackOverflow Answer " + answer_id, "trying");
+
+            setTimeout(function() {
+                $(window).trigger('run_snippet_go');
+            }, 200); // Don't freeze up the browser
+        }, 200); // Don't freeze up the browser
+    });
+    $(window).bind('run_snippet_go', function() {
         if(item >= answers.length) {
-            logger("Out of snippets to try", 1);
+            logger("Out of snippets to try", "error");
             return false;
         }
         var answer = answers[item].body;
@@ -78,7 +100,7 @@ $(function() {
             var output = JSON.stringify(value);
             if(output) {
                 $('#output').val(output); 
-                logger("Your array was sorted!", 3);
+                logger("Your array was sorted!", "success");
             } else {
                 run_next("Didn't return a value.");
             }
@@ -95,8 +117,7 @@ $(function() {
     });
 
     $('#sort').click(function() {
-        item = 0;
-        $('#logger').empty();
+        reset();
         if(!answers.length) {
             $.get(api + 'questions?pagesize=100&order=desc&sort=votes&tagged=sort;javascript&site=stackoverflow&todate=1363473554', function(d) {
                 var answer_ids = [];

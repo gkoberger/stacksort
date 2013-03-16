@@ -13,17 +13,50 @@
   <body id="home">
 
     <header>
-    <h1>stack<strong>sort</strong></h1>
-    <p>Text goes here</p>
+      <h1>stack<strong>sort</strong></h1>
+      <p>Text goes here</p>
+
+      * Inspired by xkcd
+      * Insecure code, but I have a max-date so nobody new can post code to target this
+      *created by
+
     </header>
 
-    <textarea id="input"></textarea>
-    <button id="sort">Sort</button>
-    <textarea id="output"></textarea>
+    <section>
+      <div id="left">
+        <h2>Code to run:</h2>
+        <div class="label">
+          <strong>stackoverflow_sort(</strong>
+          <div id="desc">This must be <a href="#" data-type="list">a list</a> or <a href="#" data-type="json">json</a>.</div>
+        </div>
 
-    <div id="logger"></div>
+        <div class="input">
+          <textarea id="input"></textarea>
+        </div>
+        <div class="after"><strong>);</strong></div>
+
+        <div class="sorter">
+          <button id="sort">Sort</button>
+        </div>
+
+        <div class="label">
+          <strong>var output = </strong>
+          <div>Output from the function.</div>
+        </div>
+        <div class="input">
+          <textarea id="output"></textarea>
+        </div>
+        <div class="after"><strong>;</strong></div>
+
+      </div>
+
+      <div id="right">
+        <h2>Output Console:</h2>
+        <div id="logger"></div>
+      </div>
+    </section>
     
-    <button id="sort-again">Keep Going</button>
+    <!-- <button id="sort-again">Keep Going</button> -->
 
     <script src="js/lib/jquery.js"></script>
     <!-- <script src="js/lib/jquery.lightbox_me.js"></script> -->
