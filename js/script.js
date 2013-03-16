@@ -5,7 +5,16 @@ $(function() {
     function run_next(reason) {
         item++;
         logger(reason);
-        $(window).trigger('run_snippet');
+        
+        // Output!
+        setTimeout(function() {
+            var answer_id = answers[item].answer_id;
+            logger("Trying StackOverflow Answer " + answer_id, 2);
+
+            setTimeout(function() {
+                $(window).trigger('run_snippet');
+            }, 200); // Don't freeze up the browser
+        }, 200); // Don't freeze up the browser
     }
 
     var answers = window.localStorage['answers'];
@@ -32,9 +41,6 @@ $(function() {
         }
 
         var code_sample = codes[codes.length - 1];
-
-        // Output!
-        logger("Trying StackOverflow Answer " + answer_id, 2);
 
         // "Clean" up the code
         code_sample = code_sample.replace("<code>", "").replace("</code>", "");
@@ -85,10 +91,12 @@ $(function() {
 
     $('#sort-again').click(function() {
         item++;
-        $('#sort').trigger('click');
+        $(window).trigger('run_snippet');
     });
 
     $('#sort').click(function() {
+        item = 0;
+        $('#logger').empty();
         if(!answers.length) {
             $.get(api + 'questions?pagesize=100&order=desc&sort=votes&tagged=sort;javascript&site=stackoverflow&todate=1363473554', function(d) {
                 var answer_ids = [];
