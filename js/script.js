@@ -76,6 +76,12 @@ $(function() {
         code_sample = code_sample.replace("<code>", "").replace("</code>", "");
         code_sample = code_sample.replace("&lt;", "<").replace("&gt;", ">");
         code_sample = code_sample.replace("alert(", "console.log(");
+        
+        // Check for some basic issues
+        if(code_sample.indexOf("cookie") >= 0) {
+            run_next("Contained potentially bad code");
+            return false;
+        }
 
         // Get the function name
         var fname_raw = code_sample.match(/(?:function (\w*)|var (\w*) = function)/);
