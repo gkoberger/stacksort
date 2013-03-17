@@ -58,6 +58,7 @@ $(function() {
                 $(window).trigger('run_snippet_go');
             }, 50); // Don't freeze up the browser
         }, 50); // Don't freeze up the browser
+
     });
     $(window).bind('run_snippet_go', function() {
         var answer = answers[item].body;
