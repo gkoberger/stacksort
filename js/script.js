@@ -2,10 +2,11 @@
 
 $(function() {
     // Make sure we're on the same page
-    var VERSION = "1";
-    if(window.localStorage.ss_version !== VERSION) {
-        delete window.localStorage.answers;
-        window.localStorage.ss_version = VERSION;
+    var VERSION = "2";
+    if(window.localStorage['ss_version'] != VERSION) {
+        delete window.localStorage['answers'];
+        delete window.localStorage['ss_page'];
+        window.localStorage['ss_version'] = VERSION;
     }
 
     $('#desc a').click(function() {
@@ -49,12 +50,44 @@ $(function() {
         $(window).trigger('run_snippet');
     }
 
-    var answers = window.localStorage.answers;
+    var answers = window.localStorage['answers'];
+    var page = window.localStorage['page'] || 0;
     if(!answers) {
         answers = [];
     } else {
         answers = JSON.parse(answers);
     }
+
+    $(window).bind('fetch_answers', function() {
+        page++;
+        logger("Fetching page " + page, "trying");
+        $.get(api + 'questions?page=' + page + '&pagesize=100&order=desc&sort=votes&tagged=sort;javascript&site=stackoverflow&todate=1363473554', function(d) {
+            var answer_ids = [];
+            $.each(d.items, function(k, v) {
+                if(v.accepted_answer_id) {
+                    answer_ids.push(v.accepted_answer_id);
+                }
+            });
+
+            $.get(api + 'answers/' + answer_ids.join(';') + '?pagesize=100&order=desc&sort=activity&site=stackoverflow&todate=1363473554&filter=!9hnGsyXaB', function(d2) {
+                logger("Answers downloading, ready to run.", "success");
+                //answers = [];
+                alert(answers);
+
+                $.each(d2.items, function(k, v){
+                    answers.push({
+                        'answer_id': v.answer_id, 
+                        'question_id': v.question_id, 
+                        'link': 'http://stackoverflow.com/questions/'+v.question_id+'/#' + v.answer_id,
+                        'body': v.body
+                    });
+                });
+
+                window.localStorage['answers'] = JSON.stringify(answers);
+                $(window).trigger('run_snippet');
+            });
+        });
+    });
 
     var item = 0;
     $(window).bind('run_snippet', function() {
