@@ -60,6 +60,21 @@
         
       </div>
     </section>
+
+    <section id="questions">
+      <div class="question q1">
+        <strong>How does it work?</strong>
+        <p>The site downloads the top answers for StackOverflow for the tags "javascript" and "sort", and loops through them to find code. If it finds a code
+          block, it does its best to determine the correct function name. It then evals the code from StackOverflow, with the inputted data as the paramter for
+          the function.</div>
+      <div class="question q2">
+        <strong>Is it safe?</strong>
+        <p>Uh&hellip; Well, it pretty much does the worst thing ever: eval()ing user input <em>and</em> random code from an external site. That being said, for
+          what it is, it should be relatively safe. The site will only fetch top rated answers, and it only uses answers that were posted before the xkcd was
+          released (meaning that if someone posted malicious code now, it wouldn't matter).
+          It's definitely not the safest thing, but at most it will probably just crash your browser.
+      </div>
+    </section>
     
 
     <script src="js/lib/jquery.js"></script>
