@@ -63,15 +63,20 @@
     <section id="questions">
       <div class="question q1">
         <strong>How does it work?</strong>
-        <p>As outlined by xkcd's alt text, this site downloads the top answers from StackOverflow for the tags "javascript" and "sort", and loops through them
+        <p>As outlined by <a href="http://xkcd.com/1185/">xkcd's recent alt text</a>, this site downloads the top answers from StackOverflow for the tags "javascript" and "sort", and loops through them
           to find code blocks. Upon finding a code, it does its best to determine which function should be called. It then evals the code from StackOverflow, with the inputted data as the paramter for the function.
         </p>
+        <p>It seems to work pretty well with JSON and lists, especially if you're sorting numbers.</p>
         <p>You can view the code <a href="http://github.com/gkoberger/stacksort">on GitHub</a>. If you see any bugs (or just want to berate me), please file an issue.</p>
       </div>
       <div class="question q2">
         <strong>Is it safe?</strong>
-        <p>Uh&hellip; Well, it pretty much does the worst thing ever: it evals both user input <em>and</em> random code, unchecked, from an external site. That being said, for
-          what it is, it should be relatively safe. The site will only fetch accepted answers, and it only uses answers that were posted before the xkcd was
+        <p>Uh&hellip; it evals both user input <em>and</em> random code, unchecked, from an external site. This is what security minded folks would refer to as a Very Bad
+          Thing&#0153;.
+        </p>
+        <p>
+          That being said, for
+          what it is, it should be relatively harmless. The site will only fetch accepted answers, and it only uses answers that were posted before the xkcd was
           released (meaning that if someone posted malicious code now, it wouldn't matter). It also searches for potentially-malicious code (like the word
           "cookie"), and skips those. It's definitely not the safest thing, hovever at most it would probably just crash your browser.
         </p>
