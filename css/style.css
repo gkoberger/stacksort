@@ -66,6 +66,7 @@ body .label {
   clear: both;
 }
 body .label strong {
+  padding-bottom: 5px;
   display: block;
   font-size: 14px;
   color: #000;
