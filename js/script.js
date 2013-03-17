@@ -133,7 +133,8 @@ $(function() {
     });
 
     $('#sort').click(function() {
-        if(!confirm("This downloads and runs arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is literally the worst thing ever; proceed with extreme caution.")) {
+        // Disclaimer
+        if(!confirm("Before you run: This fetches arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is probably the worst thing ever; so proceed with extreme caution.")) {
             return false;
         }
 
