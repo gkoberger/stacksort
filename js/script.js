@@ -16,6 +16,7 @@ $(function() {
         item = 0;
         $('#output').val('');
         $('#logger').empty();
+        $('#logger').append($('<div>', {class: 'oc', text: 'output console'}));
         $('#no').hide();
     }
 
@@ -135,7 +136,10 @@ $(function() {
         if(!confirm("This downloads and runs arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is literally the worst thing ever; proceed with extreme caution.")) {
             return false;
         }
+
         reset();
+        $('#logger .oc').remove();
+
         if(!answers.length) {
             $.get(api + 'questions?pagesize=100&order=desc&sort=votes&tagged=sort;javascript&site=stackoverflow&todate=1363473554', function(d) {
                 var answer_ids = [];

@@ -13,17 +13,18 @@
   <body id="home">
 
     <header>
-      <h1>stack<strong>sort</strong></h1>
-      <p>
-        In a <a href="http://xkcd.com/1185/" target="_blank">recent xkcd's</a> alt text, Randall Munroe suggested <strong>stacksort</strong>, a sort that searches StackOverflow
-        for sorting functions and runs them until it returns the correct answer. So, I made it. If you like running arbitrary code on your machine, try it out.
-      </p>
-      <p>Created by <a href="http://gkoberger.net" target="_blank">Gregory Koberger</a>. View the code <a href="https://github.com/gkoberger/stacksort/">on GitHub</a>.</p>
+      <div id="top">
+        <img src="xkcd.png" title="I'd mention I'm looking for work, but really... who would hire me after this?">
+        <h1>stack<strong>sort</strong></h1>
+        <p>
+          In a <a href="http://xkcd.com/1185/" target="_blank">recent xkcd's</a> alt text, Randall Munroe suggested <strong>stacksort</strong>, a sort that searches StackOverflow
+          for sorting functions and runs them until it returns the correct answer. So, I made it. If you like running arbitrary code on your machine, try it out. Created by <a href="http://gkoberger.net" target="_blank">Gregory Koberger</a>.
+        </p>
+      </div>
     </header>
 
     <section>
       <div id="left">
-        <h2>Code to run:</h2>
         <div class="label">
           <strong>stackoverflow_sort(</strong>
           <div id="desc">This must be <a href="#" data-type="list">a list</a> or <a href="#" data-type="json">json</a>. Works best with numbers.</div>
@@ -50,8 +51,8 @@
       </div>
 
       <div id="right">
-        <h2>Output Console:</h2>
-        <div id="logger"></div>
+        <div id="logger">
+        </div>
         <div id="no">Didn't work? <a href="#" id="sort-again">Keep trying</a></div>
         
       </div>

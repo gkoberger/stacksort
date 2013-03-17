@@ -9,9 +9,11 @@ a, a:visited {
         text-decoration: underline;
     }
 }
+
 body {
     background-color: #eee;
     section {
+        clear: both;
         margin: auto;
         overflow: hidden;
         padding-top: 50px;
@@ -29,20 +31,27 @@ body {
     header {
         background-color: #fff;
         border-bottom: 1px solid #ddd;
-        padding: 60px;
-        h1 {
-            color: #000;
-            font-weight: normal;
-            text-align: center;
-            font-size: 60px;
-            margin: 0;
-        }
-        p {
-            width: 600px;
-            font-size: 13px;
-            color: #666;
-            text-align: center;
-            margin: 10px auto 0;
+        padding: 20px 0 20px;
+        #top {
+            width: 760px;
+            margin: auto;
+            img {
+                float: left;
+                margin-right: 40px;
+            }
+            h1 {
+                color: #000;
+                font-weight: normal;
+                text-align: left;
+                font-size: 45px;
+                margin: 0;
+            }
+            p {
+                font-size: 13px;
+                color: #666;
+                text-align: left;
+                margin: 10px auto 0;
+            }
         }
     }
 
@@ -134,6 +143,11 @@ body {
         .log-trying {
             font-weight: bold;
             padding-top: 5px;
+        }
+        .oc {
+            color: #777777;
+            padding: 120px 0;
+            text-align: center;
         }
     }
     #no {
