@@ -141,7 +141,7 @@ $(function() {
 
     $('#sort').click(function() {
         // Disclaimer
-        if(!confirm("Before you run: This fetches arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is probably the worst thing ever; so proceed with extreme caution.")) {
+        if(!confirm("Before you run: This fetches arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is probably the worst thing ever; so be warned!")) {
             return false;
         }
 
