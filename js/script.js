@@ -122,7 +122,9 @@ $(function() {
             if(value && (value.length > 0 || Object.keys(value).length > 0)) {
                 $('#output').val(output); 
                 logger("Your array was sorted!", "success");
-                $('#no').show();
+                setTimeout(function() {
+                    $('#no').fadeIn();
+                }, 700);
             } else {
                 run_next("Didn't return a value.");
             }
@@ -135,6 +137,7 @@ $(function() {
 
     $('#sort-again').click(function() {
         item++;
+        $('#output').val("");
         $(window).trigger('run_snippet');
         return false;
     });
