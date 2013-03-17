@@ -1,3 +1,5 @@
+/* Don't judge me! This code is everything from badly written to extremely dangerous. */
+
 $(function() {
     $('#desc a').click(function() {
         if($(this).data('type') == 'list') {
@@ -37,6 +39,11 @@ $(function() {
 
     var item = 0;
     $(window).bind('run_snippet', function() {
+        if(item >= answers.length) {
+            logger("Out of snippets to try", "error");
+            return false;
+        }
+
         var answer_id = answers[item].answer_id;
 
         $('#no').hide();
@@ -52,10 +59,6 @@ $(function() {
         }, 100); // Don't freeze up the browser
     });
     $(window).bind('run_snippet_go', function() {
-        if(item >= answers.length) {
-            logger("Out of snippets to try", "error");
-            return false;
-        }
         var answer = answers[item].body;
         var answer_id = answers[item].answer_id;
         var question_id = answers[item].question_id;
@@ -99,10 +102,16 @@ $(function() {
         }
     });
 
+    if(!String.prototype.trim) {
+        String.prototype.trim = function () {
+            return this.replace(/^\s+|\s+$/g,'');
+        };
+    }
+
     function test_results(value) {
         try { 
             var output = JSON.stringify(value);
-            if(output) {
+            if(value && (value.length > 0 || Object.keys(value).length > 0)) {
                 $('#output').val(output); 
                 logger("Your array was sorted!", "success");
                 $('#no').show();
@@ -123,6 +132,9 @@ $(function() {
     });
 
     $('#sort').click(function() {
+        if(!confirm("This downloads and runs arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is literally the worst thing ever; proceed with extreme caution.")) {
+            return false;
+        }
         reset();
         if(!answers.length) {
             $.get(api + 'questions?pagesize=100&order=desc&sort=votes&tagged=sort;javascript&site=stackoverflow&todate=1363473554', function(d) {
