@@ -196,3 +196,9 @@ body textarea {
   padding-left: 39px;
   padding-right: 120px;
 }
+#about {
+  font-size: 12px;
+  text-align: center;
+  color: #555;
+  margin-bottom: 60px;
+}
