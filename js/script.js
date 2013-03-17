@@ -24,6 +24,7 @@ $(function() {
         $('#output').val('');
         $('#logger').empty();
         $('#logger').append($('<div>', {class: 'oc', text: 'output console'}));
+        $('#sort').text('Sort');
         $('#no').hide();
     }
 
@@ -71,8 +72,8 @@ $(function() {
 
             setTimeout(function() {
                 $(window).trigger('run_snippet_go');
-            }, 50); // Don't freeze up the browser
-        }, 50); // Don't freeze up the browser
+            }, 75); // Don't freeze up the browser
+        }, 75); // Don't freeze up the browser
 
     });
     $(window).bind('run_snippet_go', function() {
@@ -138,6 +139,7 @@ $(function() {
             if(value && (value.length > 0 || Object.keys(value).length > 0)) {
                 $('#output').val(output); 
                 logger("Your array was sorted!", "success");
+                $('#sort').text('Sort Again');
                 setTimeout(function() {
                     $('#no').fadeIn();
                 }, 700);
@@ -165,6 +167,8 @@ $(function() {
         }
 
         reset();
+
+        $('#sort').text('Sorting...');
         $('#logger .oc').remove();
 
         if(!answers.length) {
