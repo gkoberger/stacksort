@@ -96,11 +96,17 @@ $(function() {
 
         // "Clean" up the code
         code_sample = code_sample.replace("<code>", "").replace("</code>", "");
-        code_sample = code_sample.replace("&lt;", "<").replace("&gt;", ">");
-        code_sample = code_sample.replace("alert(", "console.log(");
+        code_sample = code_sample.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+        code_sample = code_sample.replace(/(console.log|alert)\(/g, "log("); // 'log' does nothing
 
         // Check for some basic issues
-        if(code_sample.indexOf("cookie") >= 0) {
+        if(
+            code_sample.indexOf("cookie") >= 0 ||
+            code_sample.indexOf("getElement") >= 0 ||
+            code_sample.indexOf("$(") >= 0 ||
+            code_sample.indexOf("_.") >= 0 ||
+            code_sample.indexOf("Backbone") >= 0
+        ) {
             run_next("Contained potentially bad code");
             return false;
         }
@@ -124,7 +130,7 @@ $(function() {
         // Construct the code to eval()
         var code_after = ";test_results(" + fname + "(" + $('#input').val() + "));";
 
-        var code = code_sample + code_after;
+        var code = "(function(log) { " + code_sample + code_after + "})(function(){})";
 
         try {
             eval(code);
@@ -142,8 +148,8 @@ $(function() {
     function test_results(value) {
         try {
             var output = JSON.stringify(value);
-            if(value && (value.length > 0 || Object.keys(value).length > 0)) {
-                $('#output').val(output);
+            if(value && typeof value == 'object' && Object.keys(value).length > 0) {
+                $('#output').val(output); 
                 logger("Your array was sorted!", "success");
                 $('#sort').attr('disabled', false).text('Sort Again');
                 setTimeout(function() {
