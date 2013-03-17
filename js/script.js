@@ -20,8 +20,14 @@ $(function() {
         $('#no').hide();
     }
 
-    function logger(text, class_suffix) {
-        $('#logger').append($('<div>', {'html': text, 'class': 'log-' + class_suffix}));
+    function logger(text, class_suffix, to_append) {
+        var $div = $('<div>', {'html': text, 'class': 'log-' + class_suffix})
+        $('#logger').append($div);
+
+        if(to_append) {
+            $div.append(to_append);
+        }
+
         $('#logger')[0].scrollTop = $('#logger')[0].scrollHeight;
     }
     function run_next(reason) {
@@ -52,7 +58,9 @@ $(function() {
         // Output!
         setTimeout(function() {
             var answer_id = answers[item].answer_id;
-            logger("Trying StackOverflow Answer " + answer_id, "trying");
+            var link = answers[item].link;
+
+            logger("Trying StackOverflow answer #", "trying", $('<a>', {'text': answer_id, 'href': link, 'target': '_blank'}));
 
             setTimeout(function() {
                 $(window).trigger('run_snippet_go');
@@ -64,6 +72,7 @@ $(function() {
         var answer = answers[item].body;
         var answer_id = answers[item].answer_id;
         var question_id = answers[item].question_id;
+        var link = answers[item].link;
         var codes = answer.match(/<code>(.|[\n\r])*?<\/code>/g);
 
         if(!codes) {
@@ -167,6 +176,7 @@ $(function() {
                         answers.push({
                             'answer_id': v.answer_id, 
                             'question_id': v.question_id, 
+                            'link': 'http://stackoverflow.com/questions/'+v.question_id+'/#' + v.answer_id,
                             'body': v.body
                         });
                     });
