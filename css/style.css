@@ -111,6 +111,9 @@ body .sorter #sort {
   padding: 10px 20px;
   text-shadow: 0 1px 1px #000000;
 }
+body .sorter #sort:disabled {
+  background-color: #888;
+}
 body textarea {
   width: 100%;
   -webkit-box-sizing: border-box;
