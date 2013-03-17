@@ -1,6 +1,13 @@
 /* Don't judge me! This code is everything from badly written to extremely dangerous. */
 
 $(function() {
+    // Make sure we're on the same page
+    var VERSION = "1";
+    if(window.localStorage['ss_version'] != VERSION) {
+        delete window.localStorage['answers'];
+        window.localStorage['ss_version'] = VERSION;
+    }
+
     $('#desc a').click(function() {
         if($(this).data('type') == 'list') {
             $('#input').val('[0, 9, 3, 2, 7]');
@@ -161,6 +168,7 @@ $(function() {
         $('#logger .oc').remove();
 
         if(!answers.length) {
+            logger("Fetching answers...", "trying");
             $.get(api + 'questions?pagesize=100&order=desc&sort=votes&tagged=sort;javascript&site=stackoverflow&todate=1363473554', function(d) {
                 var answer_ids = [];
                 $.each(d.items, function(k, v) {
@@ -170,6 +178,7 @@ $(function() {
                 });
 
                 $.get(api + 'answers/' + answer_ids.join(';') + '?pagesize=100&order=desc&sort=activity&site=stackoverflow&todate=1363473554&filter=!9hnGsyXaB', function(d2) {
+                    logger("Answers downloading, ready to run.", "success");
                     answers = [];
 
                     $.each(d2.items, function(k, v){
