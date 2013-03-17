@@ -3,13 +3,13 @@
 $(function() {
     // Make sure we're on the same page
     var VERSION = "1";
-    if(window.localStorage['ss_version'] != VERSION) {
-        delete window.localStorage['answers'];
-        window.localStorage['ss_version'] = VERSION;
+    if(window.localStorage.ss_version !== VERSION) {
+        delete window.localStorage.answers;
+        window.localStorage.ss_version = VERSION;
     }
 
     $('#desc a').click(function() {
-        if($(this).data('type') == 'list') {
+        if($(this).data('type') === 'list') {
             $('#input').val('[0, 9, 3, 2, 7]');
         } else {
             $('#input').val('{9: "World", 3: "Hello", 1: "Oh,"}');
@@ -29,7 +29,8 @@ $(function() {
     }
 
     function logger(text, class_suffix, to_append) {
-        var $div = $('<div>', {'html': text, 'class': 'log-' + class_suffix})
+        var $div = $('<div>', {'html': text, 'class': 'log-' + class_suffix});
+
         $('#logger').append($div);
 
         if(to_append) {
@@ -40,12 +41,15 @@ $(function() {
     }
     function run_next(reason) {
         item++;
-        if(reason) logger(reason, "error");
+
+        if(reason) {
+            logger(reason, "error");
+        }
 
         $(window).trigger('run_snippet');
     }
 
-    var answers = window.localStorage['answers'];
+    var answers = window.localStorage.answers;
     if(!answers) {
         answers = [];
     } else {
@@ -62,7 +66,7 @@ $(function() {
         var answer_id = answers[item].answer_id;
 
         $('#no').hide();
-        
+
         // Output!
         setTimeout(function() {
             var answer_id = answers[item].answer_id;
@@ -94,7 +98,7 @@ $(function() {
         code_sample = code_sample.replace("<code>", "").replace("</code>", "");
         code_sample = code_sample.replace("&lt;", "<").replace("&gt;", ">");
         code_sample = code_sample.replace("alert(", "console.log(");
-        
+
         // Check for some basic issues
         if(code_sample.indexOf("cookie") >= 0) {
             run_next("Contained potentially bad code");
@@ -102,9 +106,11 @@ $(function() {
         }
 
         // Get the function name
-        var fname_raw = code_sample.match(/(?:function (\w*)|var (\w*) = function)/);
+        var fname_raw = code_sample.match(/(?:function (\w*)|var (\w*) = function)/),
+            fname = null;
+
         if(fname_raw) {
-            var fname = fname_raw[1] || fname_raw[2];
+            fname = fname_raw[1] || fname_raw[2];
             if(!fname) {
                 run_next("Could not extract a function to run");
                 return false;
@@ -120,8 +126,8 @@ $(function() {
 
         var code = code_sample + code_after;
 
-        try {     
-            eval(code); 
+        try {
+            eval(code);
         } catch (e) {
             run_next("Could not compile sample");
         }
@@ -134,10 +140,10 @@ $(function() {
     }
 
     function test_results(value) {
-        try { 
+        try {
             var output = JSON.stringify(value);
             if(value && (value.length > 0 || Object.keys(value).length > 0)) {
-                $('#output').val(output); 
+                $('#output').val(output);
                 logger("Your array was sorted!", "success");
                 $('#sort').attr('disabled', false).text('Sort Again');
                 setTimeout(function() {
@@ -187,14 +193,14 @@ $(function() {
 
                     $.each(d2.items, function(k, v){
                         answers.push({
-                            'answer_id': v.answer_id, 
-                            'question_id': v.question_id, 
+                            'answer_id': v.answer_id,
+                            'question_id': v.question_id,
                             'link': 'http://stackoverflow.com/questions/'+v.question_id+'/#' + v.answer_id,
                             'body': v.body
                         });
                     });
 
-                    window.localStorage['answers'] = JSON.stringify(answers);
+                    window.localStorage.answers = JSON.stringify(answers);
                     $(window).trigger('run_snippet');
                 });
             });
