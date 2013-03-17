@@ -1,176 +1,19 @@
 /* Don't judge me! This code is everything from badly written to extremely dangerous. */
 
 $(function() {
-    // Make sure we're on the same page
-    var VERSION = "2";
+
+    /* Check version */
+    var VERSION = "8";
     if(window.localStorage['ss_version'] != VERSION) {
         delete window.localStorage['answers'];
         delete window.localStorage['ss_page'];
         window.localStorage['ss_version'] = VERSION;
     }
 
-    $('#desc a').click(function() {
-        if($(this).data('type') === 'list') {
-            $('#input').val('[0, 9, 3, 2, 7]');
-        } else {
-            $('#input').val('{9: "World", 3: "Hello", 1: "Oh,"}');
-        }
-        reset();
-
-        return false;
-    }).eq(0).trigger('click');
-
-    function reset() {
-        item = 0;
-        $('#output').val('');
-        $('#logger').empty();
-        $('#logger').append($('<div>', {class: 'oc', text: 'output console'}));
-        $('#sort').attr('disabled', false).text('Sort');
-        $('#no').hide();
+    function parseArray(array) { // TODO: move this to _?
+        if(!array) return [];
+        return JSON.parse(array);
     }
-
-    function logger(text, class_suffix, to_append) {
-        var $div = $('<div>', {'html': text, 'class': 'log-' + class_suffix});
-
-        $('#logger').append($div);
-
-        if(to_append) {
-            $div.append(to_append);
-        }
-
-        $('#logger')[0].scrollTop = $('#logger')[0].scrollHeight;
-    }
-    function run_next(reason) {
-        item++;
-
-        if(reason) {
-            logger(reason, "error");
-        }
-
-        $(window).trigger('run_snippet');
-    }
-
-    var answers = window.localStorage['answers'];
-    var page = window.localStorage['page'] || 0;
-    if(!answers) {
-        answers = [];
-    } else {
-        answers = JSON.parse(answers);
-    }
-
-    $(window).bind('fetch_answers', function() {
-        page++;
-        logger("Fetching page " + page, "trying");
-        $.get(api + 'questions?page=' + page + '&pagesize=100&order=desc&sort=votes&tagged=sort;javascript&site=stackoverflow&todate=1363473554', function(d) {
-            var answer_ids = [];
-            $.each(d.items, function(k, v) {
-                if(v.accepted_answer_id) {
-                    answer_ids.push(v.accepted_answer_id);
-                }
-            });
-
-            $.get(api + 'answers/' + answer_ids.join(';') + '?pagesize=100&order=desc&sort=activity&site=stackoverflow&todate=1363473554&filter=!9hnGsyXaB', function(d2) {
-                logger("Answers downloading, ready to run.", "success");
-                //answers = [];
-                alert(answers);
-
-                $.each(d2.items, function(k, v){
-                    answers.push({
-                        'answer_id': v.answer_id, 
-                        'question_id': v.question_id, 
-                        'link': 'http://stackoverflow.com/questions/'+v.question_id+'/#' + v.answer_id,
-                        'body': v.body
-                    });
-                });
-
-                window.localStorage['answers'] = JSON.stringify(answers);
-                $(window).trigger('run_snippet');
-            });
-        });
-    });
-
-    var item = 0;
-    $(window).bind('run_snippet', function() {
-        if(item >= answers.length) {
-            logger("Out of snippets to try", "error");
-            return false;
-        }
-
-        var answer_id = answers[item].answer_id;
-
-        $('#no').hide();
-
-        // Output!
-        setTimeout(function() {
-            var answer_id = answers[item].answer_id;
-            var link = answers[item].link;
-
-            logger("Trying StackOverflow answer #", "trying", $('<a>', {'text': answer_id, 'href': link, 'target': '_blank'}));
-
-            setTimeout(function() {
-                $(window).trigger('run_snippet_go');
-            }, 75); // Don't freeze up the browser
-        }, 75); // Don't freeze up the browser
-
-    });
-    $(window).bind('run_snippet_go', function() {
-        var answer = answers[item].body;
-        var answer_id = answers[item].answer_id;
-        var question_id = answers[item].question_id;
-        var link = answers[item].link;
-        var codes = answer.match(/<code>(.|[\n\r])*?<\/code>/g);
-
-        if(!codes) {
-            run_next("Could not find a code snippet");
-            return false;
-        }
-
-        var code_sample = codes[codes.length - 1];
-
-        // "Clean" up the code
-        code_sample = code_sample.replace("<code>", "").replace("</code>", "");
-        code_sample = code_sample.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
-        code_sample = code_sample.replace(/(console.log|alert)\(/g, "log("); // 'log' does nothing
-
-        // Check for some basic issues
-        if(
-            code_sample.indexOf("cookie") >= 0 ||
-            code_sample.indexOf("getElement") >= 0 ||
-            code_sample.indexOf("$(") >= 0 ||
-            code_sample.indexOf("_.") >= 0 ||
-            code_sample.indexOf("Backbone") >= 0
-        ) {
-            run_next("Contained potentially bad code");
-            return false;
-        }
-
-        // Get the function name
-        var fname_raw = code_sample.match(/(?:function (\w*)|var (\w*) = function)/),
-            fname = null;
-
-        if(fname_raw) {
-            fname = fname_raw[1] || fname_raw[2];
-            if(!fname) {
-                run_next("Could not extract a function to run");
-                return false;
-            }
-        } else {
-            run_next("Could not extract a function to run");
-            return false;
-        }
-
-
-        // Construct the code to eval()
-        var code_after = ";test_results(" + fname + "(" + $('#input').val() + "));";
-
-        var code = "(function(log) { " + code_sample + code_after + "})(function(){})";
-
-        try {
-            eval(code);
-        } catch (e) {
-            run_next("Could not compile sample");
-        }
-    });
 
     if(!String.prototype.trim) {
         String.prototype.trim = function () {
@@ -178,73 +21,213 @@ $(function() {
         };
     }
 
-    function test_results(value) {
-        try {
-            var output = JSON.stringify(value);
-            if(value && typeof value == 'object' && Object.keys(value).length > 0) {
-                $('#output').val(output); 
-                logger("Your array was sorted!", "success");
-                $('#sort').attr('disabled', false).text('Sort Again');
-                setTimeout(function() {
-                    $('#no').fadeIn();
-                }, 400);
-            } else {
-                run_next("Didn't return a value.");
+    /* Set up controller */
+    var _ = {
+        page: window.localStorage['ss_page'] || 1,
+        item: 0,
+        answers:  parseArray(window.localStorage['answers']),
+        api: 'http://api.stackexchange.com/2.1/',
+        reset: function() {
+            _.item = 0;
+            $('#output').val('');
+            $('#logger').empty().append($('<div>', {class: 'oc', text: 'output console'}));
+            $('#sort').attr('disabled', false).text('Sort');
+            $('#no').hide();
+        },
+        logger: function(text, class_suffix, to_append) {
+            var $div = $('<div>', {
+                'html': text, 
+                'class': 'log-' + class_suffix
+            });
+
+            $('#logger').append($div);
+
+            if(to_append) {
+                $div.append(to_append);
             }
-        } catch (e) {
-            run_next("Didn't return a valid list.");
-        }
-    }
 
-    var api = 'http://api.stackexchange.com/2.1/';
+            $('#logger')[0].scrollTop = $('#logger')[0].scrollHeight;
+        },
+        was_error: function(reason) {
+            if(reason) _.logger(reason, "error");
+            _.item++;
+            _.run_snippet();
+        },
+        get_next_page: function() {
+            _.logger("Fetching page " + _.page + "...", "trying");
 
-    $('#sort-again').click(function() {
-        item++;
-        $('#output').val("");
-        $(window).trigger('run_snippet');
-        return false;
-    });
+            var common_url = '&pagesize=100&order=desc&site=stackoverflow&todate=1363473554';
+            var question_url = _.api + 'questions?sort=votes&tagged=sort;javascript&page=' + _.page + common_url;
 
-    $('#sort').click(function() {
-        // Disclaimer
-        if(!confirm("Before you run: This fetches arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is probably the worst thing ever; so be warned!")) {
-            return false;
-        }
-
-        reset();
-
-        $('#sort').attr('disabled', true).text('Sorting...');
-        $('#logger .oc').remove();
-
-        if(!answers.length) {
-            logger("Fetching answers...", "trying");
-            $.get(api + 'questions?pagesize=100&order=desc&sort=votes&tagged=sort;javascript&site=stackoverflow&todate=1363473554', function(d) {
+            $.get(question_url, function(data_questions) {
                 var answer_ids = [];
-                $.each(d.items, function(k, v) {
+                $.each(data_questions.items, function(k, v) {
                     if(v.accepted_answer_id) {
                         answer_ids.push(v.accepted_answer_id);
                     }
                 });
 
-                $.get(api + 'answers/' + answer_ids.join(';') + '?pagesize=100&order=desc&sort=activity&site=stackoverflow&todate=1363473554&filter=!9hnGsyXaB', function(d2) {
-                    logger("Answers downloading, ready to run.", "success");
-                    answers = [];
+                var answer_url = _.api + 'answers/' + answer_ids.join(';') + '?sort=activity&filter=!9hnGsyXaB' + common_url
 
-                    $.each(d2.items, function(k, v){
-                        answers.push({
-                            'answer_id': v.answer_id,
-                            'question_id': v.question_id,
+                $.get(answer_url, function(data_answers) {
+                    _.logger("Answers downloading, ready to run.", "success");
+                    $.each(data_answers.items, function(k, v){
+                        _.answers.push({
+                            'answer_id': v.answer_id, 
+                            'question_id': v.question_id, 
                             'link': 'http://stackoverflow.com/questions/'+v.question_id+'/#' + v.answer_id,
                             'body': v.body
                         });
                     });
 
-                    window.localStorage.answers = JSON.stringify(answers);
-                    $(window).trigger('run_snippet');
+                    // Save the new answers
+                    window.localStorage['answers'] = JSON.stringify(_.answers);
+
+                    _.page = parseInt(_.page) + 1;
+                    window.localStorage['ss_page'] = _.page;
+
+                    console.log('running 1');
+                    _.run_snippet();
                 });
             });
-        } else {
-            $(window).trigger('run_snippet');
-        }
+        },
+        run_snippet: function() {
+            console.log("A", _.item, _.answers.length);
+            if(_.item >= _.answers.length) {
+                _.get_next_page();
+                return false;
+            }
+
+            var answer_id = _.answers[_.item].answer_id;
+
+            $('#no').hide();
+
+            // Output!
+            setTimeout(function() {
+                console.log("B", _.item, _.answers[_.item]);
+                var answer_id = _.answers[_.item].answer_id;
+                var link = _.answers[_.item].link;
+
+                _.logger("Trying StackOverflow answer #", "trying", $('<a>', {'text': answer_id, 'href': link, 'target': '_blank'}));
+
+                //setTimeout(function() {
+                    console.log("C", 'From', _.item, ' to ', (_.item+1));
+                    _.run_snippet_go();
+                //}, 10005); // Don't freeze up the browser
+            }, 105); // Don't freeze up the browser
+        },
+        run_snippet_go: function() {
+            var answer = _.answers[_.item].body;
+            var answer_id = _.answers[_.item].answer_id;
+            var question_id = _.answers[_.item].question_id;
+            var link = _.answers[_.item].link;
+            var codes = answer.match(/<code>(.|[\n\r])*?<\/code>/g);
+
+            if(!codes) {
+                _.was_error("Could not find a code snippet");
+                return false;
+            }
+
+            var code_sample = codes[codes.length - 1];
+
+            // "Clean" up the code
+            code_sample = code_sample.replace("<code>", "").replace("</code>", "");
+            code_sample = code_sample.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&");
+            code_sample = code_sample.replace(/(console.log|alert)\(/g, "log("); // 'log' does nothing
+
+            // Check for some basic issues
+            if(
+                code_sample.indexOf("cookie") >= 0 ||
+                code_sample.indexOf("getElement") >= 0 ||
+                code_sample.indexOf("$(") >= 0 ||
+                code_sample.indexOf("_.") >= 0 ||
+                code_sample.indexOf("Backbone") >= 0
+            ) {
+                _.was_error("Contained potentially bad code");
+                return false;
+            }
+
+            if(parseInt(_.page) >= 4) {
+                alert(code_sample);
+            }
+
+            // Get the function name
+            var fname_raw = code_sample.match(/(?:function (\w*)|var (\w*) = function)/);
+            if(fname_raw) {
+                var fname = fname_raw[1] || fname_raw[2];
+                if(!fname) {
+                    _.was_error("Could not extract a function to run");
+                    return false;
+                }
+            } else {
+                _.was_error("Could not extract a function to run");
+                return false;
+            }
+
+
+            // Construct the code to eval()
+            var code_after = ";test_results(" + fname + "(" + $('#input').val() + "));";
+            var code = "(function(log, test_results) { " + code_sample + code_after + "})(function(){}, _.test_results)";
+
+            try {     
+                eval(code); 
+            } catch (e) {
+                _.was_error("Could not compile sample");
+            }
+        },
+        test_results: function(value) {
+            try { 
+                var output = JSON.stringify(value);
+                if(value && typeof value == 'object' && Object.keys(value).length > 0) {
+                    $('#output').val(output); 
+                    _.logger("Your array was sorted!", "success");
+                    $('#sort').attr('disabled', false).text('Sort Again');
+                    _.item++;
+                    setTimeout(function() {
+                        $('#no').fadeIn();
+                    }, 400);
+                } else {
+                    _.was_error("Didn't return a value.");
+                }
+            } catch (e) {
+                _.was_error("Didn't return a valid list.");
+            }
+        },
+    };
+
+
+    /* Dom stuff */
+    $('#sort-again').click(function() {
+        $('#output').val("");
+        console.log('running 2');
+        _.run_snippet();
+        return false;
     });
+
+    $('#sort').click(function() {
+        // Disclaimer
+        // TODO: Use better modal?
+        if(!confirm("Before you run: This fetches arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is probably the worst thing ever; so be warned!")) {
+            return false;
+        }
+
+        _.reset();
+
+        $('#sort').attr('disabled', true).text('Sorting...');
+        $('#logger .oc').remove();
+
+        console.log('running 3');
+        _.run_snippet();
+    });
+
+    $('#desc a').click(function() {
+        if($(this).data('type') == 'list') {
+            $('#input').val('[0, 9, 3, 2, 7]');
+        } else {
+            $('#input').val('{9: "World", 3: "Hello", 1: "Oh,"}');
+        }
+        _.reset();
+        return false;
+    }).eq(0).trigger('click');
+
 });
