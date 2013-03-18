@@ -256,6 +256,11 @@ body textarea {
   color: #555;
   margin-bottom: 60px;
 }
+#about div {
+  color: #888;
+  font-size: 11px;
+  padding-top: 3px;
+}
 @-webkit-keyframes clockHand {
   from {
     -webkit-transform-origin: 50% 100%;
