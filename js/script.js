@@ -30,6 +30,7 @@ $(function() {
         item: 0,
         answers:  parseArray(window.localStorage.answers),
         api: 'http://api.stackexchange.com/2.1/',
+        stop: false,
         reset: function() {
             _.item = 0;
             $('#output').val('');
@@ -105,6 +106,16 @@ $(function() {
             });
         },
         run_snippet: function() {
+            if(_.stop) {
+                _.logger("Stopped by user", "out"); 
+                $('#sort').attr('disabled', false).text('Sort Again');
+                _.wait(false);
+                _.stop = false;
+                _.reset();
+                return false;
+            }
+            _.stop = false;
+
             if(_.item >= _.answers.length) {
                 _.get_next_page();
                 return false;
@@ -207,14 +218,17 @@ $(function() {
             }).find('.hour, .minute').css({
                 display: state ? 'block' : 'none'
             });
+            $('#stopper').toggleClass('hide', !state);
         }
     };
 
+    _.wait(false);
 
     /* Dom stuff */
     $('#no').click(function() {
         $('#output').val("");
         $('#sort').attr('disabled', true).text('Sorting...');
+        _.stop = false;
 
         _.run_snippet();
         return false;
@@ -234,6 +248,7 @@ $(function() {
 
         $('#sort').attr('disabled', true).text('Sorting...');
         $('#logger .oc').remove();
+        _.stop = false;
 
         _.run_snippet();
     });
@@ -246,8 +261,13 @@ $(function() {
         } else {
             $('#input').val('{3:"Hello",9:"World",1:"Oh,"}');
         }
+        _.stop = true;
         _.reset();
         return false;
     }).eq(0).trigger('click');
 
+    $('#stop').click(function() {
+        _.stop = true;
+        return false;
+    });
 });

@@ -256,6 +256,14 @@ body textarea {
   padding: 120px 0;
   text-align: center;
 }
+#stopper {
+  padding: 5px;
+  font-size: 11px;
+  text-align: center;
+}
+#stopper.hide {
+  visibility: hidden;
+}
 #no {
   background-color: #f4e26a;
   border: 1px solid #e7cb11;
