@@ -61,6 +61,7 @@ $(function() {
         get_next_page: function() {
             if(parseInt(_.page) >= 7) {
                 _.logger("All out of answers!", "error"); 
+                _.wait(false);
                 return false;
             }
             _.logger("Fetching page " + _.page + "...", "trying");
@@ -110,6 +111,7 @@ $(function() {
 
             var answer_id = _.answers[_.item].answer_id;
             $('#no').hide();
+            _.wait(true);
 
             // Output!
             setTimeout(function() {
@@ -185,8 +187,8 @@ $(function() {
                 if(value && typeof value === 'object' && Object.keys(value).length > 0) {
                     $('#output').val(output);
                     _.logger("Your array was sorted!", "success");
-                    _.wait(false);
                     $('#sort').attr('disabled', false).text('Sort Again');
+                    _.wait(false);
                     _.item++;
                     setTimeout(function() {
                         $('#no').fadeIn();
@@ -200,7 +202,7 @@ $(function() {
         },
         wait: function (state) {
             $('.sad-waiter').css({
-                height: state ? '137px' : 0
+                height: state ? 137 : 0
             }).find('.hour, .minute').css({
                 display: state ? 'block' : 'none'
             });
@@ -223,7 +225,6 @@ $(function() {
         }
 
         _.reset();
-        _.wait(true);
 
         $('#sort').attr('disabled', true).text('Sorting...');
         $('#logger .oc').remove();
