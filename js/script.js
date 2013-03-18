@@ -3,7 +3,7 @@
 $(function() {
 
     /* Check version */
-    var VERSION = "8";
+    var VERSION = "P";
     if(window.localStorage['ss_version'] != VERSION) {
         delete window.localStorage['answers'];
         delete window.localStorage['ss_page'];
@@ -58,6 +58,9 @@ $(function() {
 
             var common_url = '&pagesize=100&order=desc&site=stackoverflow&todate=1363473554';
             var question_url = _.api + 'questions?sort=votes&tagged=sort;javascript&page=' + _.page + common_url;
+
+            // Tried using Search; more results could be run but fewer good results were returned
+            //var question_url = _.api + 'search/advanced?sort=votes&accepted=True&notice=False&tagged=javascript&title=sort&page=' + _.page + common_url;
 
             $.get(question_url, function(data_questions) {
                 var answer_ids = [];
@@ -141,14 +144,11 @@ $(function() {
                 code_sample.indexOf("getElement") >= 0 ||
                 code_sample.indexOf("$(") >= 0 ||
                 code_sample.indexOf("_.") >= 0 ||
-                code_sample.indexOf("Backbone") >= 0
+                code_sample.indexOf("Backbone") >= 0 ||
+                code_sample.indexOf("new Date") >= 0
             ) {
                 _.was_error("Contained potentially bad code");
                 return false;
-            }
-
-            if(parseInt(_.page) >= 4) {
-                alert(code_sample);
             }
 
             // Get the function name
