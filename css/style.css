@@ -277,6 +277,9 @@ body textarea {
 #stopper.hide {
   visibility: hidden;
 }
+#done {
+  display: none;
+}
 #done #no {
   background-color: #f4e26a;
   border: 1px solid #e7cb11;
