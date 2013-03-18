@@ -222,6 +222,8 @@ $(function() {
         }
     };
 
+    window._ = _; //FuckIt.js demands moar globals
+
     _.wait(false);
 
     /* Dom stuff */
