@@ -182,13 +182,29 @@ $(function() {
                 return false;
             }
 
-
-            // Construct the code to eval()
-            var code_after = ";test_results(" + fname + "(" + $('#input').val() + "));";
-            var code = "(function(log, test_results) { " + code_sample + code_after + "})(function(){}, _.test_results)";
+            var $this = this;
+            function CheckRealm() {
+                if (($this.realm !== null) && ($this.realm !== undefined) && (typeof $this.realm.evaluate === "function"))
+                {
+                    try {
+                        var a = $this.realm.evaluate(code_sample);
+                        if (a.type === "throw")
+                        {
+                            throw a;
+                        }
+                        _.test_results($this.realm.evaluate(fname + "(" + $('#input').val() + ");").array);
+                    } catch (e)
+                    {
+                        _.was_error("Could not compile sample");
+                    }
+                } else {
+                    window.setTimeout(CheckRealm, 0);
+                }
+            }
 
             try {
-                eval(code);
+                this.realm = this.realm || window.continuum.createRealmAsync();
+                window.setTimeout(CheckRealm, 0);
             } catch (e) {
                 _.was_error("Could not compile sample");
             }
