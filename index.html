@@ -91,15 +91,15 @@
       <div class="question q1">
         <strong>How does it work?</strong>
         <p>As outlined by <a href="http://xkcd.com/1185/">xkcd's recent alt text</a>, this site downloads the top answers from StackOverflow for the tags
-          "javascript" and "sort", and uses the last code block (in theory, the "final" example) in the answer. It does its best to determine which function should be called. It then evals the code from StackOverflow,
-          with the inputted data as the parameter for the function.
+          "javascript" and "sort". If grabs the last code block in the answer (in theory, the "final" example), and tries to determine which function should be
+          called. It proceeds to <em>eval</em> the code from StackOverflow, with the inputted data as the first parameter for the function.
         </p>
         <p><strong>If it returns a wrongly-sorted list</strong> (or you just want to keep playing), a link to "Try the next answer" will appear under the result.</p>
         <p>You can view the code <a href="http://github.com/gkoberger/stacksort">on GitHub</a>. If you see any bugs (or just want to berate me), please file an issue.</p>
       </div>
       <div class="question q2">
         <strong>Is it safe?</strong>
-        <p>Uh&hellip; it evals both user input <em>and</em> random code, unchecked, from an external site. This is what security minded folks would refer to as Very Bad&#0153;.
+        <p>Uh&hellip; it evals both user input <em>and</em> random code, unchecked, from an external site. This is what security-minded folks would refer to as Very Bad&#0153;.
         </p>
         <p>
           That being said, for
