@@ -3,7 +3,7 @@
 $(function() {
 
     /* Check version */
-    var VERSION = "P";
+    var VERSION = "5";
     if(window.localStorage.ss_version !== VERSION) {
         delete window.localStorage.answers;
         delete window.localStorage.ss_page;
@@ -66,7 +66,7 @@ $(function() {
             _.logger("Fetching page " + _.page + "...", "trying");
 
             var common_url = '&pagesize=100&order=desc&site=stackoverflow&todate=1363473554';
-            var question_url = _.api + 'questions?sort=votes&tagged=sort;javascript&page=' + _.page + common_url;
+            var question_url = _.api + 'questions?sort=activity&tagged=sort;javascript&page=' + _.page + common_url;
 
             // Tried using Search; more results could be run but fewer good results were returned
             //var question_url = _.api + 'search/advanced?sort=votes&accepted=True&notice=False&tagged=javascript&title=sort&page=' + _.page + common_url;
@@ -119,7 +119,7 @@ $(function() {
                 _.logger("Trying StackOverflow answer #", "trying", $('<a>', {'text': answer_id, 'href': link, 'target': '_blank'}));
                 _.run_snippet_go();
 
-            }, 105); // Don't freeze up the browser
+            }, 230); // Don't freeze up the browser
         },
         run_snippet_go: function() {
             var answer = _.answers[_.item].body;
@@ -233,7 +233,7 @@ $(function() {
 
     $('#desc a').click(function() {
         if($(this).data('type') === 'list') {
-            $('#input').val('[0,9,3,2,7]');
+            $('#input').val('[9,0,3,2,7]');
         } else if($(this).data('type') === 'words') {
             $('#input').val('["World","Hello"]');
         } else {
