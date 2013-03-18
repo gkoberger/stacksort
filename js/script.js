@@ -89,13 +89,11 @@ $(function() {
                     _.page = parseInt(_.page) + 1;
                     window.localStorage['ss_page'] = _.page;
 
-                    console.log('running 1');
                     _.run_snippet();
                 });
             });
         },
         run_snippet: function() {
-            console.log("A", _.item, _.answers.length);
             if(_.item >= _.answers.length) {
                 _.get_next_page();
                 return false;
@@ -107,16 +105,12 @@ $(function() {
 
             // Output!
             setTimeout(function() {
-                console.log("B", _.item, _.answers[_.item]);
                 var answer_id = _.answers[_.item].answer_id;
                 var link = _.answers[_.item].link;
 
                 _.logger("Trying StackOverflow answer #", "trying", $('<a>', {'text': answer_id, 'href': link, 'target': '_blank'}));
+                _.run_snippet_go();
 
-                //setTimeout(function() {
-                    console.log("C", 'From', _.item, ' to ', (_.item+1));
-                    _.run_snippet_go();
-                //}, 10005); // Don't freeze up the browser
             }, 105); // Don't freeze up the browser
         },
         run_snippet_go: function() {
@@ -199,7 +193,6 @@ $(function() {
     /* Dom stuff */
     $('#sort-again').click(function() {
         $('#output').val("");
-        console.log('running 2');
         _.run_snippet();
         return false;
     });
@@ -216,7 +209,6 @@ $(function() {
         $('#sort').attr('disabled', true).text('Sorting...');
         $('#logger .oc').remove();
 
-        console.log('running 3');
         _.run_snippet();
     });
 
