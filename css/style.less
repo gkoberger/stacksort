@@ -168,14 +168,33 @@ body {
             }
         }
     }
-    textarea {
+    .textarea {
         width: 100%;
-        height: 80px;
         .border-box;
         border: 1px solid #ddd;
         .border-radius(7px);
-        resize: none;
+        background-color: #fff;
         padding: 10px;
+        textarea {
+            border: 0 none;
+            .border-box;
+            padding: 0;
+            width: 100%;
+            height: 60px;
+            resize: none;
+        }
+    }
+    textarea.textarea {
+        height: 80px;
+        resize: none;
+    }
+
+    #answer-used {
+        text-align: right;
+        border-top: 1px dotted #ddd;
+        font-size: 12px;
+        padding-top: 10px;
+        color: #999;
     }
 }
 
@@ -196,7 +215,7 @@ body {
         border: 1px solid #DDDDDD;
         .border-radius(5px);
         width: 100%;
-        height: 410px;
+        height: 430px;
         overflow: auto;
         padding: 10px 15px 15px;
         .log-error {
@@ -247,7 +266,7 @@ body {
     }
 }
 
-#done {
+.done {
     display: none;
     #no {
         @yellow: #f4e26a;

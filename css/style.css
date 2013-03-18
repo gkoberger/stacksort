@@ -193,9 +193,8 @@ body .waiting-sadly .sad-waiter .minute {
   -ms-animation: clockHand 1.5s linear infinite;
   animation: clockHand 1.5s linear infinite;
 }
-body textarea {
+body .textarea {
   width: 100%;
-  height: 80px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -203,8 +202,29 @@ body textarea {
   -webkit-border-radius: 7px;
   -moz-border-radius: 7px;
   border-radius: 7px;
-  resize: none;
+  background-color: #fff;
   padding: 10px;
+}
+body .textarea textarea {
+  border: 0 none;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
+  width: 100%;
+  height: 60px;
+  resize: none;
+}
+body textarea.textarea {
+  height: 80px;
+  resize: none;
+}
+body #answer-used {
+  text-align: right;
+  border-top: 1px dotted #ddd;
+  font-size: 12px;
+  padding-top: 10px;
+  color: #999;
 }
 #right {
   padding-left: 100px;
@@ -230,7 +250,7 @@ body textarea {
   -moz-border-radius: 5px;
   border-radius: 5px;
   width: 100%;
-  height: 410px;
+  height: 430px;
   overflow: auto;
   padding: 10px 15px 15px;
 }
@@ -277,10 +297,10 @@ body textarea {
 #stopper.hide {
   visibility: hidden;
 }
-#done {
+.done {
   display: none;
 }
-#done #no {
+.done #no {
   background-color: #f4e26a;
   border: 1px solid #e7cb11;
   -webkit-border-radius: 5px;
@@ -294,33 +314,33 @@ body textarea {
   color: #333;
   text-decoration: none;
 }
-#done #no:hover {
+.done #no:hover {
   background-color: #f0d93b;
   border: 1px solid #b7a10e;
 }
-#done #no strong {
+.done #no strong {
   font-weight: bold;
   color: #000;
 }
-#done .desc {
+.done .desc {
   border-right: 1px dotted #ccc;
   padding-right: 20px;
   margin-right: 20px;
 }
-#done .tweet,
-#done .desc {
+.done .tweet,
+.done .desc {
   margin-top: 20px;
   font-size: 12px;
   float: left;
   width: 129px;
 }
-#done .tweet a,
-#done .desc a {
+.done .tweet a,
+.done .desc a {
   display: block;
   padding: 3px 0 3px 10px;
 }
-#done .tweet strong,
-#done .desc strong {
+.done .tweet strong,
+.done .desc strong {
   display: block;
 }
 #questions {

@@ -36,7 +36,7 @@ $(function() {
             $('#output').val('');
             $('#logger').empty().append($('<div>', {class: 'oc', text: 'output console'}));
             $('#sort').attr('disabled', false).text('Sort');
-            $('#done').hide();
+            $('.done').hide();
         },
         logger: function(text, class_suffix, to_append) {
             var $div = $('<div>', {
@@ -122,7 +122,7 @@ $(function() {
             }
 
             var answer_id = _.answers[_.item].answer_id;
-            $('#done').hide();
+            $('.done').hide();
             _.wait(true);
 
             // Output!
@@ -199,11 +199,16 @@ $(function() {
                 if(value && typeof value === 'object' && Object.keys(value).length > 0) {
                     $('#output').val(output);
                     _.logger("Your array was sorted!", "success");
+
+                    var answer_id = _.answers[_.item].answer_id;
+                    var link = _.answers[_.item].link;
+                    $('#answer-used a').attr({'href': link}).text(answer_id);
+
                     $('#sort').attr('disabled', false).text('Sort Again');
                     _.wait(false);
                     _.item++;
                     setTimeout(function() {
-                        $('#done').fadeIn();
+                        $('.done').fadeIn();
                     }, 400);
                 } else {
                     _.was_error("Didn't return a value.");
