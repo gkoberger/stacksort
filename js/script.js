@@ -217,9 +217,11 @@ $(function() {
 
     $('#desc a').click(function() {
         if($(this).data('type') === 'list') {
-            $('#input').val('[0, 9, 3, 2, 7]');
+            $('#input').val('[0,9,3,2,7]');
+        } else if($(this).data('type') === 'words') {
+            $('#input').val('["World","Hello"]');
         } else {
-            $('#input').val('{9: "World", 3: "Hello", 1: "Oh,"}');
+            $('#input').val('{3:"Hello",9:"World",1:"Oh,"}');
         }
         _.reset();
         return false;
