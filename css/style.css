@@ -253,7 +253,7 @@ body textarea {
 }
 #right #logger .oc {
   color: #777777;
-  padding: 120px 0;
+  padding: 170px 0;
   text-align: center;
 }
 #stopper {
@@ -319,7 +319,7 @@ body textarea {
 #about div {
   color: #888;
   font-size: 11px;
-  padding-top: 3px;
+  padding-top: 11px;
 }
 @keyframes clockHand {
   from {
