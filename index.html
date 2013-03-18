@@ -62,10 +62,12 @@
     <section id="questions">
       <div class="question q1">
         <strong>How does it work?</strong>
-        <p>As outlined by <a href="http://xkcd.com/1185/">xkcd's recent alt text</a>, this site downloads the top answers from StackOverflow for the tags "javascript" and "sort", and loops through them
-          to find code blocks. Upon finding a code, it does its best to determine which function should be called. It then evals the code from StackOverflow, with the inputted data as the paramter for the function.
+        <p>As outlined by <a href="http://xkcd.com/1185/">xkcd's recent alt text</a>, this site downloads the top answers from StackOverflow for the tags
+          "javascript" and "sort", and uses the last code block (in theory, the "final" example) in the answer. It does its best to determine which function should be called. It then evals the code from StackOverflow,
+          with the inputted data as the parameter for the function.
         </p>
-        <p>It seems to work pretty well with JSON and lists, especially if you're sorting numbers.</p>
+        <p><strong>If it doesn't work the first time</strong> (or you just want to keep playing), a "Keep Trying" link will appear under the result. Pressing
+          "Sort Again" will start from the beginning.</p>
         <p>You can view the code <a href="http://github.com/gkoberger/stacksort">on GitHub</a>. If you see any bugs (or just want to berate me), please file an issue.</p>
       </div>
       <div class="question q2">
