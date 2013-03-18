@@ -124,10 +124,9 @@ body .waiting-sadly {
 }
 body .waiting-sadly .sad-waiter {
   position: relative;
-  width: 100px;
-  margin: 0 auto;
   width: 128px;
   height: 137px;
+  margin: 0 auto;
   background-image: url(../waiting.png);
   height: 0;
 }
@@ -142,6 +141,9 @@ body .waiting-sadly .sad-waiter .hour {
   border-right: 1px solid transparent;
   border-bottom: 15px solid black;
   -webkit-animation: clockHand 18s linear infinite;
+  -moz-animation: clockHand 18s linear infinite;
+  -ms-animation: clockHand 18s linear infinite;
+  animation: clockHand 18s linear infinite;
 }
 body .waiting-sadly .sad-waiter .minute {
   display: none;
@@ -154,6 +156,9 @@ body .waiting-sadly .sad-waiter .minute {
   border-right: 1px solid transparent;
   border-bottom: 17px solid black;
   -webkit-animation: clockHand 1.5s linear infinite;
+  -moz-animation: clockHand 1.5s linear infinite;
+  -ms-animation: clockHand 1.5s linear infinite;
+  animation: clockHand 1.5s linear infinite;
 }
 body textarea {
   width: 100%;
@@ -254,10 +259,26 @@ body textarea {
 @-webkit-keyframes clockHand {
   from {
     -webkit-transform-origin: 50% 100%;
+    -moz-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    -o-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
     -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
   }
   to {
     -webkit-transform-origin: 50% 100%;
+    -moz-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    -o-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
     -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
   }
 }

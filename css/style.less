@@ -115,12 +115,12 @@ body {
         padding-top: 10px;
         .sad-waiter {
             position: relative;
-            width: 100px;
-            margin: 0 auto;
             width: 128px;
             height: 137px;
+            margin: 0 auto;
             background-image: url(../waiting.png);
             height: 0;
+            // -webkit-transition: 0.2s height;
             .hour {
                 display: none;
                 position: absolute;
@@ -131,7 +131,7 @@ body {
                 border-left: 1px solid transparent;
                 border-right: 1px solid transparent;
                 border-bottom: 15px solid black;
-                -webkit-animation: clockHand 18s linear infinite;
+                .animation(clockHand 18s linear infinite);
             }
             .minute {
                 display: none;
@@ -143,7 +143,7 @@ body {
                 border-left: 1px solid transparent;
                 border-right: 1px solid transparent;
                 border-bottom: 17px solid black;
-                -webkit-animation: clockHand 1.5s linear infinite;
+                .animation(clockHand 1.5s linear infinite);
             }
         }
     }
@@ -241,12 +241,12 @@ body {
 
 @-webkit-keyframes clockHand {
   from {
-    -webkit-transform-origin: 50% 100%;
-    -webkit-transform: rotate(0deg);
+    .transform-origin(50% 100%);
+    .transform(rotate(0deg));
   }
 
   to {
-    -webkit-transform-origin: 50% 100%;
-    -webkit-transform: rotate(360deg);
+    .transform-origin(50% 100%);
+    .transform(rotate(360deg));
   }
 }

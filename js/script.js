@@ -4,14 +4,17 @@ $(function() {
 
     /* Check version */
     var VERSION = "P";
-    if(window.localStorage.ss_version != VERSION) {
+    if(window.localStorage.ss_version !== VERSION) {
         delete window.localStorage.answers;
         delete window.localStorage.ss_page;
         window.localStorage.ss_version = VERSION;
     }
 
     function parseArray(array) { // TODO: move this to _?
-        if(!array) return [];
+        if(!array) {
+            return [];
+        }
+
         return JSON.parse(array);
     }
 
@@ -72,7 +75,7 @@ $(function() {
                     }
                 });
 
-                var answer_url = _.api + 'answers/' + answer_ids.join(';') + '?sort=activity&filter=!9hnGsyXaB' + common_url
+                var answer_url = _.api + 'answers/' + answer_ids.join(';') + '?sort=activity&filter=!9hnGsyXaB' + common_url;
 
                 $.get(answer_url, function(data_answers) {
                     _.logger("Answers downloading, ready to run.", "success");
@@ -88,7 +91,7 @@ $(function() {
                     // Save the new answers
                     window.localStorage.answers = JSON.stringify(_.answers);
 
-                    _.page = parseInt(_.page) + 1;
+                    _.page = parseInt(_.page, 10) + 1;
                     window.localStorage.ss_page = _.page;
 
                     _.run_snippet();
@@ -175,9 +178,10 @@ $(function() {
         test_results: function(value) {
             try {
                 var output = JSON.stringify(value);
-                if(value && typeof value == 'object' && Object.keys(value).length > 0) {
+                if(value && typeof value === 'object' && Object.keys(value).length > 0) {
                     $('#output').val(output);
                     _.logger("Your array was sorted!", "success");
+                    _.wait(false);
                     $('#sort').attr('disabled', false).text('Sort Again');
                     _.item++;
                     setTimeout(function() {
@@ -190,6 +194,13 @@ $(function() {
                 _.was_error("Didn't return a valid list.");
             }
         },
+        wait: function (state) {
+            $('.sad-waiter').css({
+                height: state ? '137px' : 0
+            }).find('.hour, .minute').css({
+                display: state ? 'block' : 'none'
+            });
+        }
     };
 
 
@@ -208,6 +219,7 @@ $(function() {
         }
 
         _.reset();
+        _.wait(true);
 
         $('#sort').attr('disabled', true).text('Sorting...');
         $('#logger .oc').remove();
