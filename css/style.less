@@ -233,25 +233,45 @@ body {
     }
 }
 
-#no {
-    @yellow: #f4e26a;
-    background-color: @yellow;
-    border: 1px solid darken(@yellow, 20%);
-    .border-radius(5px);
-    padding: 10px;
-    display: block;
-    font-size: 12px;
-    margin-top: 10px;
-    text-align: center;
-    color: #333;
-    text-decoration: none;
-    &:hover {
-        background-color: darken(@yellow, 10%);
-        border: 1px solid darken(@yellow, 30%);
+#done {
+    #no {
+        @yellow: #f4e26a;
+        background-color: @yellow;
+        border: 1px solid darken(@yellow, 20%);
+        .border-radius(5px);
+        padding: 10px;
+        display: block;
+        font-size: 12px;
+        margin-top: 10px;
+        text-align: center;
+        color: #333;
+        text-decoration: none;
+        &:hover {
+            background-color: darken(@yellow, 10%);
+            border: 1px solid darken(@yellow, 30%);
+        }
+        strong {
+            font-weight: bold;
+            color: #000;
+        }
     }
-    strong {
-        font-weight: bold;
-        color: #000;
+    .desc {
+        border-right: 1px dotted #ccc;
+        padding-right: 20px;
+        margin-right: 20px;
+    }
+    .tweet, .desc {
+        margin-top: 20px;
+        font-size: 12px;
+        float: left;
+        width: 129px;
+        a {
+            display: block;
+            padding: 3px 0 3px 10px;
+        }
+        strong {
+            display: block;
+        }
     }
 }
 

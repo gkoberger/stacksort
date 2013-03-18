@@ -29,7 +29,7 @@
       <div id="left">
         <div class="label">
           <strong>stackoverflow_sort(</strong>
-          <div id="desc">Try <a href="#" data-type="list">a list of numbers</a>, <a href="#" data-type="words">a list of words</a> or <a href="#" data-type="json">json</a>.</div>
+          <div class="desc">Try <a href="#" data-type="list">a list of numbers</a>, <a href="#" data-type="words">a list of words</a> or <a href="#" data-type="json">json</a>.</div>
         </div>
 
         <div class="input">
@@ -47,7 +47,19 @@
         </div>
         <div class="input">
           <textarea id="output"></textarea>
-          <a href="#" id="no">Didn't work? <strong>Try the next answer</strong></a>
+          <div id="done">
+            <a href="#" id="no">Didn't work? <strong>Try the next answer</strong></a>
+            <div class="desc start-now">
+              <strong>Try again with&hellip;</strong> 
+              <a href="#" data-type="list">a list of numbers</a>
+              <a href="#" data-type="words">a list of words</a>
+              <a href="#" data-type="json">json blob</a>.</div>
+            <div class="tweet">
+              <strong>Mention it on &hellip;</strong>
+              <a target="_blank"
+                href="https://twitter.com/intent/tweet?source=webclient&text=An+xkcd-inspired+StackSort+http://gkoberger.github.com/stacksort+(By+@gkoberer)">on Twitter</a> 
+              <a href="#" target="_blank">on Hacker News</a></div>
+          </div>
         </div>
         <div class="after"><strong>;</strong></div>
 

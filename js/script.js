@@ -36,7 +36,7 @@ $(function() {
             $('#output').val('');
             $('#logger').empty().append($('<div>', {class: 'oc', text: 'output console'}));
             $('#sort').attr('disabled', false).text('Sort');
-            $('#no').hide();
+            $('#done').hide();
         },
         logger: function(text, class_suffix, to_append) {
             var $div = $('<div>', {
@@ -122,7 +122,7 @@ $(function() {
             }
 
             var answer_id = _.answers[_.item].answer_id;
-            $('#no').hide();
+            $('#done').hide();
             _.wait(true);
 
             // Output!
@@ -203,7 +203,7 @@ $(function() {
                     _.wait(false);
                     _.item++;
                     setTimeout(function() {
-                        $('#no').fadeIn();
+                        $('#done').fadeIn();
                     }, 400);
                 } else {
                     _.was_error("Didn't return a value.");
@@ -253,7 +253,7 @@ $(function() {
         _.run_snippet();
     });
 
-    $('#desc a').click(function() {
+    $('.desc a').click(function() {
         if($(this).data('type') === 'list') {
             $('#input').val('[9,0,3,2,7]');
         } else if($(this).data('type') === 'words') {
@@ -263,6 +263,10 @@ $(function() {
         }
         _.stop = true;
         _.reset();
+
+        if($(this).parent().hasClass('start-now')) {
+            $('#sort').trigger('click'); 
+        }
         return false;
     }).eq(0).trigger('click');
 

@@ -264,7 +264,7 @@ body textarea {
 #stopper.hide {
   visibility: hidden;
 }
-#no {
+#done #no {
   background-color: #f4e26a;
   border: 1px solid #e7cb11;
   -webkit-border-radius: 5px;
@@ -278,13 +278,34 @@ body textarea {
   color: #333;
   text-decoration: none;
 }
-#no:hover {
+#done #no:hover {
   background-color: #f0d93b;
   border: 1px solid #b7a10e;
 }
-#no strong {
+#done #no strong {
   font-weight: bold;
   color: #000;
+}
+#done .desc {
+  border-right: 1px dotted #ccc;
+  padding-right: 20px;
+  margin-right: 20px;
+}
+#done .tweet,
+#done .desc {
+  margin-top: 20px;
+  font-size: 12px;
+  float: left;
+  width: 129px;
+}
+#done .tweet a,
+#done .desc a {
+  display: block;
+  padding: 3px 0 3px 10px;
+}
+#done .tweet strong,
+#done .desc strong {
+  display: block;
 }
 #questions {
   border-top: 1px dotted #ccc;
