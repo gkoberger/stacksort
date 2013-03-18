@@ -15,16 +15,17 @@
 
   var FuckIt = function(script){
     window.fuckingDeferred = $.Deferred();
-    $.ajax({
-      url: script,
-      dataType: "text"
-    }).then(function(result){
-      window.fuckedScript = result;
+    // $.ajax({
+    //   url: script,
+    //   dataType: "text"
+    // }).then(function(result){
+    //   window.fuckedScript = result;
+      window.fuckedScript = script;
       eval(window.fuckedScript);
       window.fuckingDeferred.resolve();
-    }, function(){
-      throw new Error("Could not load script: "+script);
-    });
+    // }, function(){
+    //   throw new Error("Could not load script: "+script);
+    // });
     return window.fuckingDeferred.promise();
   }
 
