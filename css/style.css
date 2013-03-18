@@ -233,6 +233,9 @@ body textarea {
   font-size: 11px;
   color: green;
   border-bottom: 1px dotted #ccc;
+  padding-bottom: 5px;
+  padding-top: 2px;
+  padding-left: 0px;
 }
 #right #logger .log-trying {
   font-weight: bold;

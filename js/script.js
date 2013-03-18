@@ -222,9 +222,12 @@ $(function() {
     $('#sort').click(function() {
         // Disclaimer
         // TODO: Use better modal?
-        if(!confirm("Before you run: This fetches arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is probably the worst thing ever; so be warned!")) {
+        var warn = "This fetches arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is probably the worst thing ever; you've been warned!";
+        var ready = window.localStorage.ss_confirmed || confirm(warn);
+        if(!ready) {
             return false;
         }
+        window.localStorage.ss_confirmed = true;
 
         _.reset();
 
