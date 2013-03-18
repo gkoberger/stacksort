@@ -213,6 +213,8 @@ $(function() {
     /* Dom stuff */
     $('#sort-again').click(function() {
         $('#output').val("");
+        $('#sort').attr('disabled', true).text('Sorting...');
+
         _.run_snippet();
         return false;
     });
