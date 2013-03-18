@@ -114,6 +114,52 @@ body .sorter #sort {
 body .sorter #sort:disabled {
   background-color: #888;
 }
+body .waiting-sadly {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  clear: both;
+  margin-left: 170px;
+  padding-top: 10px;
+}
+body .waiting-sadly .sad-waiter {
+  position: relative;
+  width: 128px;
+  height: 137px;
+  margin: 0 auto;
+  background-image: url(../waiting.png);
+  height: 0;
+}
+body .waiting-sadly .sad-waiter .hour {
+  display: none;
+  position: absolute;
+  bottom: 113px;
+  right: 22px;
+  width: 0;
+  height: 0;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 15px solid black;
+  -webkit-animation: clockHand 18s linear infinite;
+  -moz-animation: clockHand 18s linear infinite;
+  -ms-animation: clockHand 18s linear infinite;
+  animation: clockHand 18s linear infinite;
+}
+body .waiting-sadly .sad-waiter .minute {
+  display: none;
+  position: absolute;
+  bottom: 113px;
+  right: 22px;
+  width: 0;
+  height: 0;
+  border-left: 1px solid transparent;
+  border-right: 1px solid transparent;
+  border-bottom: 17px solid black;
+  -webkit-animation: clockHand 1.5s linear infinite;
+  -moz-animation: clockHand 1.5s linear infinite;
+  -ms-animation: clockHand 1.5s linear infinite;
+  animation: clockHand 1.5s linear infinite;
+}
 body textarea {
   width: 100%;
   -webkit-box-sizing: border-box;
@@ -209,4 +255,30 @@ body textarea {
   text-align: center;
   color: #555;
   margin-bottom: 60px;
+}
+@-webkit-keyframes clockHand {
+  from {
+    -webkit-transform-origin: 50% 100%;
+    -moz-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    -o-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -ms-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform-origin: 50% 100%;
+    -moz-transform-origin: 50% 100%;
+    -ms-transform-origin: 50% 100%;
+    -o-transform-origin: 50% 100%;
+    transform-origin: 50% 100%;
+    -webkit-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -ms-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
 }
