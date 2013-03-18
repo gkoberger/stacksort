@@ -56,6 +56,10 @@ $(function() {
             _.run_snippet();
         },
         get_next_page: function() {
+            if(parseInt(_.page) >= 7) {
+                _.logger("All out of answers!", "error"); 
+                return false;
+            }
             _.logger("Fetching page " + _.page + "...", "trying");
 
             var common_url = '&pagesize=100&order=desc&site=stackoverflow&todate=1363473554';
