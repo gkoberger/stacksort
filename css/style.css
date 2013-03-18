@@ -229,6 +229,16 @@ body textarea {
   font-size: 11px;
   color: #a71010;
 }
+#right #logger .log-out {
+  font-size: 11px;
+  color: #a71010;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  padding: 5px;
+  text-align: center;
+  background-color: #eee;
+  padding: 10px;
+}
 #right #logger .log-success {
   font-size: 11px;
   color: green;

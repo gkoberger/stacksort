@@ -60,7 +60,8 @@ $(function() {
         },
         get_next_page: function() {
             if(parseInt(_.page) >= 7) {
-                _.logger("All out of answers!", "error"); 
+                _.logger("Out of answers from StackOverflow!", "out"); 
+                $('#sort').attr('disabled', false).text('Sort Again');
                 _.wait(false);
                 return false;
             }
