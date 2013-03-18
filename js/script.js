@@ -118,7 +118,7 @@ $(function() {
                 var answer_id = _.answers[_.item].answer_id;
                 var link = _.answers[_.item].link;
 
-                _.logger("Trying StackOverflow answer #", "trying", $('<a>', {'text': answer_id, 'href': link, 'target': '_blank'}));
+                _.logger("Trying StackOverflow answer ", "trying", $('<a>', {'text': answer_id, 'href': link, 'target': '_blank'}));
                 _.run_snippet_go();
 
             }, 230); // Don't freeze up the browser
@@ -211,7 +211,7 @@ $(function() {
 
 
     /* Dom stuff */
-    $('#sort-again').click(function() {
+    $('#no').click(function() {
         $('#output').val("");
         $('#sort').attr('disabled', true).text('Sorting...');
 

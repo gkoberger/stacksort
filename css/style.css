@@ -102,17 +102,37 @@ body .sorter {
   text-align: center;
 }
 body .sorter #sort {
+  border: 1px solid #4a658b;
+  box-shadow: 0 1px rgba(255, 255, 255, 0.3) inset;
+  -moz-box-shadow: 0 1px rgba(255, 255, 255, 0.3) inset;
+  -webkit-box-shadow: 0 1px rgba(255, 255, 255, 0.3) inset;
+  -webkit-border-radius: 7px;
+  -moz-border-radius: 7px;
+  border-radius: 7px;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#8099bb), to(#5f7ea9));
+  background-image: linear-gradient(#8099bb, #5f7ea9);
+  background-image: -moz-linear-gradient(#8099bb, #5f7ea9);
+  background-image: -webkit-linear-gradient(#8099bb, #5f7ea9);
   background-color: #5f7ea9;
-  border: 0 none;
   color: #FFFFFF;
   font-size: 23px;
-  font-weight: bold;
   margin-left: 170px;
-  padding: 10px 20px;
+  padding: 10px 40px;
   text-shadow: 0 1px 1px #000000;
+}
+body .sorter #sort:hover {
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#5f7ea9), to(#4a658b));
+  background-image: linear-gradient(#5f7ea9, #4a658b);
+  background-image: -moz-linear-gradient(#5f7ea9, #4a658b);
+  background-image: -webkit-linear-gradient(#5f7ea9, #4a658b);
 }
 body .sorter #sort:disabled {
   background-color: #888;
+  border: 1px solid #919191;
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#c3c3c3), to(#aaaaaa));
+  background-image: linear-gradient(#c3c3c3, #aaaaaa);
+  background-image: -moz-linear-gradient(#c3c3c3, #aaaaaa);
+  background-image: -webkit-linear-gradient(#c3c3c3, #aaaaaa);
 }
 body .waiting-sadly {
   -webkit-box-sizing: border-box;
@@ -162,6 +182,7 @@ body .waiting-sadly .sad-waiter .minute {
 }
 body textarea {
   width: 100%;
+  height: 80px;
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -196,15 +217,22 @@ body textarea {
   -moz-border-radius: 5px;
   border-radius: 5px;
   width: 100%;
-  height: 370px;
+  height: 410px;
   overflow: auto;
   padding: 10px 15px 15px;
 }
 #right #logger .log-error {
-  color: red;
+  border-bottom: 1px dotted #ccc;
+  padding-bottom: 5px;
+  padding-top: 2px;
+  padding-left: 0px;
+  font-size: 11px;
+  color: #a71010;
 }
 #right #logger .log-success {
+  font-size: 11px;
   color: green;
+  border-bottom: 1px dotted #ccc;
 }
 #right #logger .log-trying {
   font-weight: bold;
@@ -216,15 +244,26 @@ body textarea {
   text-align: center;
 }
 #no {
-  background-color: #f3f1bb;
+  background-color: #f4e26a;
+  border: 1px solid #e7cb11;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
-  padding: 5px;
+  padding: 10px;
   display: block;
   font-size: 12px;
   margin-top: 10px;
   text-align: center;
+  color: #333;
+  text-decoration: none;
+}
+#no:hover {
+  background-color: #f0d93b;
+  border: 1px solid #b7a10e;
+}
+#no strong {
+  font-weight: bold;
+  color: #000;
 }
 #questions {
   border-top: 1px dotted #ccc;
