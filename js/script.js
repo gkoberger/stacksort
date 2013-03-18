@@ -4,10 +4,10 @@ $(function() {
 
     /* Check version */
     var VERSION = "P";
-    if(window.localStorage['ss_version'] != VERSION) {
-        delete window.localStorage['answers'];
-        delete window.localStorage['ss_page'];
-        window.localStorage['ss_version'] = VERSION;
+    if(window.localStorage.ss_version != VERSION) {
+        delete window.localStorage.answers;
+        delete window.localStorage.ss_page;
+        window.localStorage.ss_version = VERSION;
     }
 
     function parseArray(array) { // TODO: move this to _?
@@ -23,9 +23,9 @@ $(function() {
 
     /* Set up controller */
     var _ = {
-        page: window.localStorage['ss_page'] || 1,
+        page: window.localStorage.ss_page || 1,
         item: 0,
-        answers:  parseArray(window.localStorage['answers']),
+        answers:  parseArray(window.localStorage.answers),
         api: 'http://api.stackexchange.com/2.1/',
         reset: function() {
             _.item = 0;
@@ -49,7 +49,9 @@ $(function() {
             $('#logger')[0].scrollTop = $('#logger')[0].scrollHeight;
         },
         was_error: function(reason) {
-            if(reason) _.logger(reason, "error");
+            if(reason) {
+                _.logger(reason, "error");
+            }
             _.item++;
             _.run_snippet();
         },
@@ -76,18 +78,18 @@ $(function() {
                     _.logger("Answers downloading, ready to run.", "success");
                     $.each(data_answers.items, function(k, v){
                         _.answers.push({
-                            'answer_id': v.answer_id, 
-                            'question_id': v.question_id, 
+                            'answer_id': v.answer_id,
+                            'question_id': v.question_id,
                             'link': 'http://stackoverflow.com/questions/'+v.question_id+'/#' + v.answer_id,
                             'body': v.body
                         });
                     });
 
                     // Save the new answers
-                    window.localStorage['answers'] = JSON.stringify(_.answers);
+                    window.localStorage.answers = JSON.stringify(_.answers);
 
                     _.page = parseInt(_.page) + 1;
-                    window.localStorage['ss_page'] = _.page;
+                    window.localStorage.ss_page = _.page;
 
                     _.run_snippet();
                 });
@@ -100,7 +102,6 @@ $(function() {
             }
 
             var answer_id = _.answers[_.item].answer_id;
-
             $('#no').hide();
 
             // Output!
@@ -146,9 +147,11 @@ $(function() {
             }
 
             // Get the function name
-            var fname_raw = code_sample.match(/(?:function (\w*)|var (\w*) = function)/);
+            var fname_raw = code_sample.match(/(?:function (\w*)|var (\w*) = function)/),
+                fname = null;
+
             if(fname_raw) {
-                var fname = fname_raw[1] || fname_raw[2];
+                fname = fname_raw[1] || fname_raw[2];
                 if(!fname) {
                     _.was_error("Could not extract a function to run");
                     return false;
@@ -170,10 +173,10 @@ $(function() {
             }
         },
         test_results: function(value) {
-            try { 
+            try {
                 var output = JSON.stringify(value);
                 if(value && typeof value == 'object' && Object.keys(value).length > 0) {
-                    $('#output').val(output); 
+                    $('#output').val(output);
                     _.logger("Your array was sorted!", "success");
                     $('#sort').attr('disabled', false).text('Sort Again');
                     _.item++;
@@ -213,7 +216,7 @@ $(function() {
     });
 
     $('#desc a').click(function() {
-        if($(this).data('type') == 'list') {
+        if($(this).data('type') === 'list') {
             $('#input').val('[0, 9, 3, 2, 7]');
         } else {
             $('#input').val('{9: "World", 3: "Hello", 1: "Oh,"}');
