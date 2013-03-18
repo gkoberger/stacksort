@@ -255,9 +255,11 @@ $(function() {
 
     $('.desc a').click(function() {
         if($(this).data('type') === 'list') {
-            $('#input').val('[9,0,3,2,7]');
+            $('#input').val('[8,6,7,5,3,0,9]');
         } else if($(this).data('type') === 'words') {
             $('#input').val('["World","Hello"]');
+        } else if($(this).data('type') === 'text') {
+            $('#input').val('"jennyigotyournumber"');
         } else {
             $('#input').val('{3:"Hello",9:"World",1:"Oh,"}');
         }
