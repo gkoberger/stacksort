@@ -251,7 +251,8 @@ body #answer-used {
   border-radius: 5px;
   width: 100%;
   height: 430px;
-  overflow: auto;
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
   padding: 10px 15px 15px;
 }
 #right #logger .log-error {
