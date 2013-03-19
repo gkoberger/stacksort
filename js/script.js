@@ -161,6 +161,9 @@ $(function() {
                 code_sample.indexOf("$(") >= 0 ||
                 code_sample.indexOf("_.") >= 0 ||
                 code_sample.indexOf("Backbone") >= 0 ||
+                code_sample.indexOf("localStorage") >= 0 ||
+                code_sample.indexOf("src") >= 0 || //Makes it hard to inject scripts
+                code_sample.match(/get|post|XMLHttp/i) || //hinder AJAX
                 code_sample.indexOf("new Date") >= 0
             ) {
                 _.was_error("Contained potentially bad code");
