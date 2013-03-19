@@ -69,7 +69,7 @@ $(function() {
             _.logger("Fetching page " + _.page + "...", "trying");
 
             var common_url = '&pagesize=100&order=desc&site=stackoverflow&todate=1363473554';
-            var question_url = _.api + 'questions?sort=activity&tagged=sort;javascript&page=' + _.page + common_url;
+            var question_url = _.api + 'questions?sort=votes&tagged=sort;javascript&page=' + _.page + common_url;
 
             // Tried using Search; more results could be run but fewer good results were returned
             //var question_url = _.api + 'search/advanced?sort=votes&accepted=True&notice=False&tagged=javascript&title=sort&page=' + _.page + common_url;
@@ -77,12 +77,12 @@ $(function() {
             $.get(question_url, function(data_questions) {
                 var answer_ids = [];
                 $.each(data_questions.items, function(k, v) {
-                    if(v.accepted_answer_id) {
+                    if(v.accepted_answer_id && v.score >5) {
                         answer_ids.push(v.accepted_answer_id);
                     }
                 });
 
-                var answer_url = _.api + 'answers/' + answer_ids.join(';') + '?sort=activity&filter=!9hnGsyXaB' + common_url;
+                var answer_url = _.api + 'answers/' + answer_ids.join(';') + '?sort=votes&filter=!9hnGsyXaB' + common_url;
 
                 $.get(answer_url, function(data_answers) {
                     _.logger("Answers downloading, ready to run.", "success");
