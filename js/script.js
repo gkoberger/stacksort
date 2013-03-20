@@ -74,9 +74,9 @@ $(function() {
             // Tried using Search; more results could be run but fewer good results were returned
             //var question_url = _.api + 'search/advanced?sort=votes&accepted=True&notice=False&tagged=javascript&title=sort&page=' + _.page + common_url;
 
-            $.get(question_url, function(data_questions) {
+            $.getJSON(question_url, function(data_questions) {
                 var answer_ids = [];
-                $.each(data_questions.items, function(k, v) {
+                $.each(data_questions['items'], function(k, v) {
                     if(v.accepted_answer_id) {
                         answer_ids.push(v.accepted_answer_id);
                     }
@@ -84,9 +84,9 @@ $(function() {
 
                 var answer_url = _.api + 'answers/' + answer_ids.join(';') + '?sort=activity&filter=!9hnGsyXaB' + common_url;
 
-                $.get(answer_url, function(data_answers) {
+                $.getJSON(answer_url, function(data_answers) {
                     _.logger("Answers downloading, ready to run.", "success");
-                    $.each(data_answers.items, function(k, v){
+                    $.each(data_answers['items'], function(k, v){
                         _.answers.push({
                             'answer_id': v.answer_id,
                             'question_id': v.question_id,
