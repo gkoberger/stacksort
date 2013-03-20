@@ -3,7 +3,7 @@
 $(function() {
 
     /* Check version */
-    var VERSION = "5";
+    var VERSION = "6";
     if(window.localStorage.ss_version !== VERSION) {
         delete window.localStorage.answers;
         delete window.localStorage.ss_page;
@@ -68,7 +68,7 @@ $(function() {
             }
             _.logger("Fetching page " + _.page + "...", "trying");
 
-            var common_url = '&pagesize=100&order=desc&site=stackoverflow&todate=1363473554';
+            var common_url = '&pagesize=100&order=desc&site=stackoverflow&todate=1363060800';
             var question_url = _.api + 'questions?sort=activity&tagged=sort;javascript&page=' + _.page + common_url;
 
             // Tried using Search; more results could be run but fewer good results were returned
