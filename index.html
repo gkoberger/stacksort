@@ -94,7 +94,7 @@
       <div class="question q1">
         <strong>How does it work?</strong>
         <p>As outlined by <a href="http://xkcd.com/1185/">xkcd's recent alt text</a>, this site downloads the top answers from StackOverflow for the tags
-          "javascript" and "sort". If grabs the last code block in the answer (in theory, the "final" example), and tries to determine which function should be
+          "javascript" and "sort". It grabs the last code block in the answer (in theory, the "final" example), and tries to determine which function should be
           called. It proceeds to <em>eval</em> the code from StackOverflow, with the inputted data as the first parameter for the function.
         </p>
         <p><strong>If it returns a wrongly-sorted list</strong> (or you just want to keep playing), a link to "Try the next answer" will appear under the result.</p>
