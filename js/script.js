@@ -29,7 +29,7 @@ $(function() {
         page: window.localStorage.ss_page || 1,
         item: 0,
         answers:  parseArray(window.localStorage.answers),
-        api: 'http://api.stackexchange.com/2.1/',
+        api: '//api.stackexchange.com/2.1/',
         stop: false,
         reset: function() {
             _.item = 0;
