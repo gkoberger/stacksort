@@ -200,19 +200,23 @@ $(function() {
             try {
                 var output = JSON.stringify(value);
                 if(value && typeof value === 'object' && Object.keys(value).length > 0) {
-                    $('#output').val(output);
-                    _.logger("Your array was sorted!", "success");
+                    if (JSON.parse($('#input').val()).length !== Object.keys(value).length) {
+                        _.was_error("The array's length was changed");
+                    } else {
+                        $('#output').val(output);
+                        _.logger("Your array was sorted!", "success");
 
-                    var answer_id = _.answers[_.item].answer_id;
-                    var link = _.answers[_.item].link;
-                    $('#answer-used a').attr({'href': link}).text(answer_id);
+                        var answer_id = _.answers[_.item].answer_id;
+                        var link = _.answers[_.item].link;
+                        $('#answer-used a').attr({'href': link}).text(answer_id);
 
-                    $('#sort').attr('disabled', false).text('Sort Again');
-                    _.wait(false);
-                    _.item++;
-                    setTimeout(function() {
-                        $('.done').fadeIn();
-                    }, 400);
+                        $('#sort').attr('disabled', false).text('Sort Again');
+                        _.wait(false);
+                        _.item++;
+                        setTimeout(function() {
+                            $('.done').fadeIn();
+                        }, 400);
+                    }
                 } else {
                     _.was_error("Didn't return a value.");
                 }
