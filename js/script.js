@@ -191,7 +191,7 @@ $(function() {
             var code = "(function(log, test_results) { " + code_sample + code_after + "})(function(){}, _.test_results)";
 
             try {
-                eval(code);
+                FuckIt(code);
             } catch (e) {
                 _.was_error("Could not compile sample");
             }
@@ -229,6 +229,8 @@ $(function() {
             $('#stopper').toggleClass('hide', !state);
         }
     };
+
+    window._ = _; //FuckIt.js demands moar globals
 
     _.wait(false);
 
