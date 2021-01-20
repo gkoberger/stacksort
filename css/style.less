@@ -108,7 +108,7 @@ body {
         clear: both;
         padding: 20px;
         text-align: center;
-        #sort {
+        #sort, #no {
             border: 1px solid darken(@blue, 10%);
             .box-shadow(0 1px rgba(255,255,255,0.3) inset);
             .border-radius(7px);
@@ -187,6 +187,11 @@ body {
     textarea.textarea {
         height: 80px;
         resize: none;
+        &:disabled {
+
+          background: #f3f3f3;
+          color: #888;
+        }
     }
 
     #answer-used {
@@ -380,4 +385,11 @@ body {
     .transform-origin(50% 100%);
     .transform(rotate(360deg));
   }
+}
+
+#next {
+  margin-left: 170px;
+  margin-top: 8px;
+  font-size: 14px;
+  height: 14px;
 }

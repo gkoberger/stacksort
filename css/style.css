@@ -114,7 +114,8 @@ body .sorter {
   padding: 20px;
   text-align: center;
 }
-body .sorter #sort {
+body .sorter #sort,
+body .sorter #no {
   border: 1px solid #4a658b;
   box-shadow: 0 1px rgba(255, 255, 255, 0.3) inset;
   -moz-box-shadow: 0 1px rgba(255, 255, 255, 0.3) inset;
@@ -133,19 +134,21 @@ body .sorter #sort {
   padding: 10px 40px;
   text-shadow: 0 1px 1px #000000;
 }
-body .sorter #sort:hover {
+body .sorter #sort:hover,
+body .sorter #no:hover {
   background-image: -webkit-gradient(linear, left bottom, left top, from(#5f7ea9), to(#4a658b));
   background-image: linear-gradient(#5f7ea9, #4a658b);
   background-image: -moz-linear-gradient(#5f7ea9, #4a658b);
   background-image: -webkit-linear-gradient(#5f7ea9, #4a658b);
 }
-body .sorter #sort:disabled {
+body .sorter #sort:disabled,
+body .sorter #no:disabled {
   background-color: #888;
   border: 1px solid #919191;
-  background-image: -webkit-gradient(linear, left bottom, left top, from(#c3c3c3), to(#aaaaaa));
-  background-image: linear-gradient(#c3c3c3, #aaaaaa);
-  background-image: -moz-linear-gradient(#c3c3c3, #aaaaaa);
-  background-image: -webkit-linear-gradient(#c3c3c3, #aaaaaa);
+  background-image: -webkit-gradient(linear, left bottom, left top, from(#c3c3c3), to(#aaa));
+  background-image: linear-gradient(#c3c3c3, #aaa);
+  background-image: -moz-linear-gradient(#c3c3c3, #aaa);
+  background-image: -webkit-linear-gradient(#c3c3c3, #aaa);
 }
 body .waiting-sadly {
   -webkit-box-sizing: border-box;
@@ -218,6 +221,10 @@ body .textarea textarea {
 body textarea.textarea {
   height: 80px;
   resize: none;
+}
+body textarea.textarea:disabled {
+  background: #f3f3f3;
+  color: #888;
 }
 body #answer-used {
   text-align: right;
@@ -456,4 +463,10 @@ body #answer-used {
     -o-transform: rotate(360deg);
     transform: rotate(360deg);
   }
+}
+#next {
+  margin-left: 170px;
+  margin-top: 8px;
+  font-size: 14px;
+  height: 14px;
 }

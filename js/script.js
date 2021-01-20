@@ -35,7 +35,8 @@ $(function() {
             _.item = 0;
             $('#output').val('');
             $('#logger').empty().append($('<div>', {class: 'oc', text: 'output console'}));
-            $('#sort').attr('disabled', false).text('Sort');
+            $('#sort').show().attr('disabled', false).text('Sort');
+            $('#no').hide();
             $('.done').hide();
         },
         logger: function(text, class_suffix, to_append) {
@@ -61,8 +62,8 @@ $(function() {
         },
         get_next_page: function() {
             if(parseInt(_.page) >= 7) {
-                _.logger("Out of answers from StackOverflow!", "out"); 
-                $('#sort').attr('disabled', false).text('Sort Again');
+                _.logger("Out of answers from StackOverflow!", "out");
+                $('#sort').attr('disabled', false).html('Try Next Answer&hellip;');
                 _.wait(false);
                 return false;
             }
@@ -107,8 +108,10 @@ $(function() {
         },
         run_snippet: function() {
             if(_.stop) {
-                _.logger("Stopped by user", "out"); 
-                $('#sort').attr('disabled', false).text('Sort Again');
+                _.logger("Stopped by user", "out");
+                $('#sort').attr('disabled', false);
+                $('#input').attr('disabled', false);
+                $('#next-stop').hide();
                 _.wait(false);
                 _.stop = false;
                 _.reset();
@@ -207,7 +210,12 @@ $(function() {
                     var link = _.answers[_.item].link;
                     $('#answer-used a').attr({'href': link}).text(answer_id);
 
-                    $('#sort').attr('disabled', false).text('Sort Again');
+                    $('#no').show();
+                    $('#next-restart').show();
+                    $('#sort').hide();
+                    $('#input').attr('disabled', false);
+                    $('#next-stop').hide();
+
                     _.wait(false);
                     _.item++;
                     setTimeout(function() {
@@ -236,7 +244,12 @@ $(function() {
 
     /* Dom stuff */
     $('#no').click(function() {
+        $('#input').attr('disabled', true);
+        $('#next-stop').show();
+        $('#next-restart').hide();
         $('#output').val("");
+        $('#sort').show();
+        $('#no').hide();
         $('#sort').attr('disabled', true).text('Sorting...');
         _.stop = false;
 
@@ -245,6 +258,9 @@ $(function() {
     });
 
     $('#sort').click(function() {
+        $('#input').attr('disabled', true);
+        $('#next-stop').show();
+        $('#next-restart').hide();
         // Disclaimer
         // TODO: Use better modal?
         var warn = "This fetches arbitary JavaScript from StackOverflow and eval()s it.\n\nThis is probably the worst thing ever; you've been warned!";
@@ -263,6 +279,12 @@ $(function() {
         _.run_snippet();
     });
 
+    $('#input').on('change keyup', function() {
+      $('#no').hide();
+      $('#sort').text('Sort').attr('disabled', false).show();
+      $('#input').attr('disabled', false);
+    });
+
     $('.desc a').click(function() {
         if($(this).data('type') === 'list') {
             $('#input').val('[8,6,7,5,3,0,9]');
@@ -273,16 +295,17 @@ $(function() {
         } else {
             $('#input').val('{3:"Hello",9:"World",1:"Oh,"}');
         }
+
         _.stop = true;
         _.reset();
 
         if($(this).parent().hasClass('start-now')) {
-            $('#sort').trigger('click'); 
+            $('#sort').trigger('click');
         }
         return false;
     }).eq(0).trigger('click');
 
-    $('#stop').click(function() {
+    $('#stop, #next-stop').click(function() {
         _.stop = true;
         return false;
     });

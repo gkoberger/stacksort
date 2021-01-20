@@ -44,6 +44,11 @@
 
         <div class="sorter">
           <button id="sort">Sort</button>
+          <button style="display: none;" href="#" id="no">Try next answer&hellip;</button>
+          <div id="next">
+            <a href="" id="next-stop" style="display: none;">Stop running</a>
+            <a href="." id="next-restart" style="display: none;">Start over</a>
+          </div>
         </div>
 
         <div class="label">
@@ -56,7 +61,6 @@
             <div id="answer-used" class="done">Sorted using answer <a href="#" target="_blank"></a></div>
           </div>
           <div id="done" class="done">
-            <a href="#" id="no">Didn't work? <strong>Try the next answer</strong></a>
             <div class="desc start-now">
               <strong>Try again with&hellip;</strong>
               <a href="#" data-type="list">a list of numbers</a>
